@@ -98,17 +98,26 @@ var renderMapPins = function (array) {
   mapPinsContainerELement.appendChild(mapPinsFragment);
 };
 
+var renderApartmentPictures = function (picturesContainer, pictures) {
+  var picturesFragment = document.createDocumentFragment();
+  var pictureItemElement = picturesContainer.querySelector('li');
+
+  for (var i = 0; i < pictures.length; i++) {
+    var apartmentPictureElement = pictureItemElement.cloneNode(true);
+    apartmentPictureElement.querySelector('img').src = pictures[i];
+    apartmentPictureElement.querySelector('img').width = 50;
+    picturesFragment.appendChild(apartmentPictureElement);
+  }
+  picturesContainer.appendChild(picturesFragment);
+};
+
 var renderOfferCard = function (apartmentItem) {
   var mapFiltersContainerElement = document.querySelector('.map__filters-container');
   var offerCardTemplate = document.querySelector('template').content.querySelector('.map__card');
   var offerCard = offerCardTemplate.cloneNode(true);
   var paragraphElements = offerCard.querySelectorAll('p');
   var featuresElements = offerCard.querySelectorAll('.feature');
-  // переменные для добавления фото
-  var picturesFragment = document.createDocumentFragment();
   var picturesContainerElement = offerCard.querySelector('.popup__pictures');
-  var pictureItemElement = picturesContainerElement.querySelector('li');
-  var pictures = apartmentItem.offer.photos;
 
   var offerType = {
     flat: 'Квартира',
@@ -132,13 +141,7 @@ var renderOfferCard = function (apartmentItem) {
     }
   }
 
-  for (var j = 0; j < pictures.length; j++) {
-    var apartmentPictureElement = pictureItemElement.cloneNode(true);
-    apartmentPictureElement.querySelector('img').src = pictures[j];
-    apartmentPictureElement.querySelector('img').width = 50;
-    picturesFragment.appendChild(apartmentPictureElement);
-  }
-  picturesContainerElement.appendChild(picturesFragment);
+  renderApartmentPictures(picturesContainerElement, apartmentItem.offer.photos);
 
   mapFiltersContainerElement.parentNode.insertBefore(offerCard, mapFiltersContainerElement);
 };
