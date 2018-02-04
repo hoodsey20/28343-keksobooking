@@ -53,7 +53,7 @@ function generateAdverts(advertsNumber) {
 
     var generatedAdvert = {
       author: {
-        avatar: 'img/avatars/user0' + Number(i + 1) + '.png',
+        avatar: 'img/avatars/user0' + (i + 1) + '.png',
       },
       offer: {
         title: titles[i],
