@@ -2,7 +2,7 @@
 
 var MAP_PIN_WIDTH = 50;
 var MAP_PIN_HEIGHT = 70;
-var advertQuantity = 8;
+var ADVERT_QUANTITY = 8;
 
 var avatars = [
   '01',
@@ -159,7 +159,7 @@ var renderOfferCard = function (apartmentItem) {
   mapFiltersContainerElement.parentNode.insertBefore(offerCard, mapFiltersContainerElement);
 };
 
-var adverts = generateAdverts(advertQuantity);
+var adverts = generateAdverts(ADVERT_QUANTITY);
 var mapElement = document.querySelector('.map');
 
 renderMapPins(adverts);
