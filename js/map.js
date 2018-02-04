@@ -111,12 +111,20 @@ var renderApartmentPictures = function (picturesContainer, pictures) {
   picturesContainer.appendChild(picturesFragment);
 };
 
+var deleteOddFeatures = function (featureItems, featuresList) {
+  for (var i = 0; i < featureItems.length; i++) {
+    if (featuresList.indexOf(featureItems[i].className.split('--')[1]) === -1) {
+      featureItems[i].remove();
+    }
+  }
+};
+
 var renderOfferCard = function (apartmentItem) {
   var mapFiltersContainerElement = document.querySelector('.map__filters-container');
   var offerCardTemplate = document.querySelector('template').content.querySelector('.map__card');
   var offerCard = offerCardTemplate.cloneNode(true);
   var paragraphElements = offerCard.querySelectorAll('p');
-  var featuresElements = offerCard.querySelectorAll('.feature');
+  var featureElements = offerCard.querySelectorAll('.feature');
   var picturesContainerElement = offerCard.querySelector('.popup__pictures');
 
   var offerType = {
@@ -135,12 +143,7 @@ var renderOfferCard = function (apartmentItem) {
   paragraphElements[3].textContent = 'Заезд после ' + apartmentItem.offer.checkin + ', выезд до ' + apartmentItem.offer.checkout;
   paragraphElements[4].textContent = apartmentItem.offer.description;
 
-  for (var i = 0; i < featuresElements.length; i++) {
-    if (apartmentItem.offer.features.indexOf(featuresElements[i].className.split('--')[1]) === -1) {
-      featuresElements[i].remove();
-    }
-  }
-
+  deleteOddFeatures(featureElements, apartmentItem.offer.features);
   renderApartmentPictures(picturesContainerElement, apartmentItem.offer.photos);
 
   mapFiltersContainerElement.parentNode.insertBefore(offerCard, mapFiltersContainerElement);
