@@ -4,17 +4,6 @@ var MAP_PIN_WIDTH = 50;
 var MAP_PIN_HEIGHT = 70;
 var ADVERT_QUANTITY = 8;
 
-var avatars = [
-  '01',
-  '02',
-  '03',
-  '04',
-  '05',
-  '06',
-  '07',
-  '08',
-];
-
 var titles = [
   'Большая уютная квартира',
   'Маленькая неуютная квартира',
@@ -69,7 +58,7 @@ function generateAdverts(advertsNumber) {
 
     var generatedAdvert = {
       author: {
-        avatar: 'img/avatars/user' + getRandomValueFromArray(avatars) + '.png',
+        avatar: 'img/avatars/user0' + Number(i + 1) + '.png',
       },
       offer: {
         title: getRandomValueFromArray(titles),
