@@ -36,11 +36,6 @@ var photos = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
-var getRandomValueFromArray = function (array) {
-  var randomIndex = Math.floor(Math.random() * (array.length));
-  return array.splice(randomIndex, 1);
-};
-
 function getRandomInInterval(min, max) {
   return Math.round(Math.random() * (max - min) + min);
 }
@@ -61,7 +56,7 @@ function generateAdverts(advertsNumber) {
         avatar: 'img/avatars/user0' + Number(i + 1) + '.png',
       },
       offer: {
-        title: getRandomValueFromArray(titles),
+        title: titles[i],
         address: locationX + ', ' + locationY,
         price: getRandomInInterval(1000, 1000000),
         type: types[getRandomInInterval(0, types.length - 1)],
