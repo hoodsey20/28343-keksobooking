@@ -1,6 +1,5 @@
 'use strict';
 
-var MAP_PIN_WIDTH = 50;
 var MAP_PIN_HEIGHT = 70;
 var ADVERT_QUANTITY = 8;
 
@@ -89,8 +88,8 @@ var renderMapPins = function (array) {
     var pin = mapPinTemplate.cloneNode(true);
     var pinImg = pin.querySelector('img');
 
-    pin.style.left = array[i].location.x - MAP_PIN_WIDTH / 2 + 'px';
-    pin.style.top = array[i].location.y - MAP_PIN_HEIGHT + 'px';
+    pin.style.left = array[i].location.x + 'px';
+    pin.style.top = array[i].location.y - MAP_PIN_HEIGHT / 2 + 'px';
     pinImg.src = array[i].author.avatar;
     mapPinsFragment.appendChild(pin);
   }
