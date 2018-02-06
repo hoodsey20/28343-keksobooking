@@ -118,6 +118,25 @@ var deleteOddFeatures = function (featureItems, featuresList) {
   }
 };
 
+var getRightWorldForm = function (number, worldForms) {
+  var number = Math.abs(number);
+  var index = 0;
+
+  switch (true) {
+    case number % 100 > 4 && number % 100 < 20:
+      index = 2;
+      break;
+    case number % 10 === 0 || number % 10 >= 5:
+      index = 2;
+      break;
+    case number % 10 === 2 || number % 10 === 3 || number % 10 === 4:
+      index = 1;
+      break;
+  }
+
+  return worldForms[index];
+};
+
 var renderOfferCard = function (apartmentItem) {
   var mapFiltersContainerElement = document.querySelector('.map__filters-container');
   var offerCardTemplate = document.querySelector('template').content.querySelector('.map__card');
@@ -132,13 +151,18 @@ var renderOfferCard = function (apartmentItem) {
     house: 'Дом',
   };
 
+  var roomsWordForms = ['комната', 'комнаты', 'комнат'];
+  var guestsWordForms = ['гостя', 'гостей', 'гостей'];
+  var currentRoomsWordForm = getRightWorldForm(apartmentItem.offer.rooms, roomsWordForms);
+  var guestsRoomsWordForm = getRightWorldForm(apartmentItem.offer.guests, guestsWordForms);
+
   offerCard.querySelector('.popup__avatar').src = apartmentItem.author.avatar;
   offerCard.querySelector('h3').textContent = apartmentItem.offer.title;
   offerCard.querySelector('.popup__price').textContent = apartmentItem.offer.price + '₽/ночь';
   offerCard.querySelector('h4').textContent = offerType[apartmentItem.offer.type];
 
   paragraphElements[0].textContent = apartmentItem.offer.address;
-  paragraphElements[2].textContent = apartmentItem.offer.rooms + ' комнаты для ' + apartmentItem.offer.guests + ' гостей';
+  paragraphElements[2].textContent = apartmentItem.offer.rooms + ' ' + currentRoomsWordForm + ' для ' + apartmentItem.offer.guests + ' ' + guestsRoomsWordForm;
   paragraphElements[3].textContent = 'Заезд после ' + apartmentItem.offer.checkin + ', выезд до ' + apartmentItem.offer.checkout;
   paragraphElements[4].textContent = apartmentItem.offer.description;
 
