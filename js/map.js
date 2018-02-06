@@ -118,20 +118,16 @@ var deleteOddFeatures = function (featureItems, featuresList) {
   }
 };
 
-var getRightWorldForm = function (number, worldForms) {
-  var number = Math.abs(number);
+var getRightWorldForm = function (num, worldForms) {
+  var number = Math.abs(num);
+  var remainderOfDivisionBy100 = number % 100;
+  var remainderOfDivisionBy10 = number % 10;
   var index = 0;
 
-  switch (true) {
-    case number % 100 > 4 && number % 100 < 20:
-      index = 2;
-      break;
-    case number % 10 === 0 || number % 10 >= 5:
-      index = 2;
-      break;
-    case number % 10 === 2 || number % 10 === 3 || number % 10 === 4:
-      index = 1;
-      break;
+  if (remainderOfDivisionBy100 > 4 && remainderOfDivisionBy100 < 20 || remainderOfDivisionBy10 === 0 || remainderOfDivisionBy10 >= 5) {
+    index = 2;
+  } else if (remainderOfDivisionBy10 > 1 && remainderOfDivisionBy10 < 5) {
+    index = 1;
   }
 
   return worldForms[index];
