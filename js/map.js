@@ -204,7 +204,7 @@ var unsetActiveState = function () {
   }
 };
 
-var setPinCoordinates = function (xCoordinate, yCoordinate) {
+var setAdressValue = function (xCoordinate, yCoordinate) {
   var adressInputElement = document.querySelector('#address');
   adressInputElement.value = xCoordinate + ', ' + yCoordinate;
 };
@@ -215,7 +215,7 @@ var mainPinMouseupHandler = function (evt) {
   var mainPinXCoordinate = mainPinOffsetLeft + MAIN_PIN_WIDTH / 2;
   var mainPinYCoordinate = mainPinOffsetTop + MAIN_PIN_HEIGHT + MAIN_PIN_PEAK_HEIGHT;
 
-  setPinCoordinates(mainPinXCoordinate, mainPinYCoordinate);
+  setAdressValue(mainPinXCoordinate, mainPinYCoordinate);
 };
 
 var offerPinClickHandler = function (evt) {
