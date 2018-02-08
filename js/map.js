@@ -1,5 +1,8 @@
 'use strict';
 
+var MAIN_PIN_WIDTH = 65;
+var MAIN_PIN_HEIGHT = 65;
+var MAIN_PIN_PEAK_HEIGHT = 22;
 var MAP_PIN_HEIGHT = 70;
 var ADVERT_QUANTITY = 8;
 
@@ -67,7 +70,6 @@ function generateAdverts(advertsNumber) {
         description: '',
         photos: photos.sort(compareWithRandomResult),
       },
-
       location: {
         x: locationX,
         y: locationY,
@@ -88,6 +90,7 @@ var renderMapPins = function (array) {
     var pin = mapPinTemplate.cloneNode(true);
     var pinImg = pin.querySelector('img');
 
+    pin.dataset.offerindex = i;
     pin.style.left = array[i].location.x + 'px';
     pin.style.top = array[i].location.y - MAP_PIN_HEIGHT / 2 + 'px';
     pinImg.src = array[i].author.avatar;
@@ -173,6 +176,18 @@ var mapElement = document.querySelector('.map');
 var advertFormElement = document.querySelector('.notice__form');
 var advertFormFieldsetElements = advertFormElement.querySelectorAll('fieldset');
 var mainPinElement = document.querySelector('.map__pin--main');
+var adressInputElement = document.querySelector('#address');
+
+var findParentByClass = function (elNode, classString) {
+  var target = elNode;
+  while (target !== document) {
+    if (target.classList.contains(classString)) {
+      return target;
+    }
+    target = target.parentNode;
+  }
+  return false;
+};
 
 var setActiveState = function () {
   advertFormElement.classList.remove('notice__form--disabled');
@@ -190,6 +205,29 @@ var unsetActiveState = function () {
   }
 };
 
+var mainPinMouseupHandler = function (evt) {
+  var mainPinOffsetLeft = evt.currentTarget.offsetLeft;
+  var mainPinOffsetTop = evt.currentTarget.offsetTop;
+
+  var mainPinXCoordinate = mainPinOffsetLeft + MAIN_PIN_WIDTH / 2;
+  var mainPinYCoordinate = mainPinOffsetTop + MAIN_PIN_HEIGHT + MAIN_PIN_PEAK_HEIGHT;
+
+  adressInputElement.value = mainPinXCoordinate + ', ' + mainPinYCoordinate;
+};
+
+var offerPinClickHandler = function (evt) {
+  var clickedButtonElement = findParentByClass(evt.target, 'map__pin');
+
+  if (!!clickedButtonElement && clickedButtonElement.dataset.offerindex) {
+    renderOfferCard(adverts[clickedButtonElement.dataset.offerindex]);
+  }
+};
+
 unsetActiveState();
 
-mainPinElement.addEventListener('mouseup', setActiveState);
+mainPinElement.addEventListener('mouseup', function (evt) {
+  setActiveState();
+  mainPinMouseupHandler(evt);
+  renderMapPins(adverts);
+  mapElement.addEventListener('click', offerPinClickHandler);
+});
