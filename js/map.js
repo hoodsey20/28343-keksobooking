@@ -176,7 +176,6 @@ var mapElement = document.querySelector('.map');
 var advertFormElement = document.querySelector('.notice__form');
 var advertFormFieldsetElements = advertFormElement.querySelectorAll('fieldset');
 var mainPinElement = document.querySelector('.map__pin--main');
-var adressInputElement = document.querySelector('#address');
 
 var findParentByClass = function (elNode, classString) {
   var target = elNode;
@@ -205,14 +204,18 @@ var unsetActiveState = function () {
   }
 };
 
+var setPinCoordinates = function (xCoordinate, yCoordinate) {
+  var adressInputElement = document.querySelector('#address');
+  adressInputElement.value = xCoordinate + ', ' + yCoordinate;
+};
+
 var mainPinMouseupHandler = function (evt) {
   var mainPinOffsetLeft = evt.currentTarget.offsetLeft;
   var mainPinOffsetTop = evt.currentTarget.offsetTop;
-
   var mainPinXCoordinate = mainPinOffsetLeft + MAIN_PIN_WIDTH / 2;
   var mainPinYCoordinate = mainPinOffsetTop + MAIN_PIN_HEIGHT + MAIN_PIN_PEAK_HEIGHT;
 
-  adressInputElement.value = mainPinXCoordinate + ', ' + mainPinYCoordinate;
+  setPinCoordinates(mainPinXCoordinate, mainPinYCoordinate);
 };
 
 var offerPinClickHandler = function (evt) {
