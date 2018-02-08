@@ -170,9 +170,26 @@ var renderOfferCard = function (apartmentItem) {
 
 var adverts = generateAdverts(ADVERT_QUANTITY);
 var mapElement = document.querySelector('.map');
+var advertFormElement = document.querySelector('.notice__form');
+var advertFormFieldsetElements = advertFormElement.querySelectorAll('fieldset');
+var mainPinElement = document.querySelector('.map__pin--main');
 
-var advertFormFieldsetElements = document.querySelectorAll('.notice__form fieldset');
+var setActiveState = function () {
+  advertFormElement.classList.remove('notice__form--disabled');
+  mapElement.classList.remove('map--faded');
+  for (var i = 0; i < advertFormFieldsetElements.length; i++) {
+    advertFormFieldsetElements[i].disabled = false;
+  }
+};
 
-for (var i = 0; i < advertFormFieldsetElements.length; i++) {
-  advertFormFieldsetElements[i].disabled = true;
-}
+var unsetActiveState = function () {
+  advertFormElement.classList.add('notice__form--disabled');
+  mapElement.classList.add('map--faded');
+  for (var i = 0; i < advertFormFieldsetElements.length; i++) {
+    advertFormFieldsetElements[i].disabled = true;
+  }
+};
+
+unsetActiveState();
+
+mainPinElement.addEventListener('mouseup', setActiveState);
