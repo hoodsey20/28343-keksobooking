@@ -229,5 +229,6 @@ mainPinElement.addEventListener('mouseup', function (evt) {
   setActiveState();
   mainPinMouseupHandler(evt);
   renderMapPins(adverts);
-  mapElement.addEventListener('click', offerPinClickHandler);
 });
+
+mapElement.addEventListener('click', offerPinClickHandler);
