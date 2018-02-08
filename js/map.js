@@ -171,6 +171,8 @@ var renderOfferCard = function (apartmentItem) {
 var adverts = generateAdverts(ADVERT_QUANTITY);
 var mapElement = document.querySelector('.map');
 
-renderMapPins(adverts);
-renderOfferCard(adverts[0]);
-mapElement.classList.remove('map--faded');
+var advertFormFieldsetElements = document.querySelectorAll('.notice__form fieldset');
+
+for (var i = 0; i < advertFormFieldsetElements.length; i++) {
+  advertFormFieldsetElements[i].disabled = true;
+}
