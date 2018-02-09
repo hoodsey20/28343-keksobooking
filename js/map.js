@@ -121,19 +121,19 @@ var deleteOddFeatures = function (featureItems, featuresList) {
   }
 };
 
-var getRightWorldForm = function (num, worldForms) {
+var getRightWorldForm = function (num, one, two, five) {
   var number = Math.abs(num);
   var remainderOfDivisionBy100 = number % 100;
   var remainderOfDivisionBy10 = number % 10;
-  var index = 0;
+  var noun = one;
 
   if (remainderOfDivisionBy100 > 4 && remainderOfDivisionBy100 < 20 || remainderOfDivisionBy10 === 0 || remainderOfDivisionBy10 >= 5) {
-    index = 2;
+    noun = five;
   } else if (remainderOfDivisionBy10 > 1 && remainderOfDivisionBy10 < 5) {
-    index = 1;
+    noun = two;
   }
 
-  return worldForms[index];
+  return noun;
 };
 
 var renderOfferCard = function (apartmentItem) {
@@ -150,10 +150,8 @@ var renderOfferCard = function (apartmentItem) {
     house: 'Дом',
   };
 
-  var roomsWordForms = ['комната', 'комнаты', 'комнат'];
-  var guestsWordForms = ['гостя', 'гостей', 'гостей'];
-  var currentRoomsWordForm = getRightWorldForm(apartmentItem.offer.rooms, roomsWordForms);
-  var guestsRoomsWordForm = getRightWorldForm(apartmentItem.offer.guests, guestsWordForms);
+  var currentRoomsWordForm = getRightWorldForm(apartmentItem.offer.rooms, 'комната', 'комнаты', 'комнат');
+  var guestsRoomsWordForm = getRightWorldForm(apartmentItem.offer.guests, 'гостя', 'гостей', 'гостей');
 
   offerCard.querySelector('.popup__avatar').src = apartmentItem.author.avatar;
   offerCard.querySelector('h3').textContent = apartmentItem.offer.title;
