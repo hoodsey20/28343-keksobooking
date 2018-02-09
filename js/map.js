@@ -6,38 +6,6 @@ var MAIN_PIN_PEAK_HEIGHT = 22;
 var MAP_PIN_HEIGHT = 70;
 var ADVERT_QUANTITY = 8;
 
-var titles = [
-  'Большая уютная квартира',
-  'Маленькая неуютная квартира',
-  'Огромный прекрасный дворец',
-  'Маленький ужасный дворец',
-  'Красивый гостевой домик',
-  'Некрасивый негостеприимный домик',
-  'Уютное бунгало далеко от моря',
-  'Неуютное бунгало по колено в воде',
-];
-
-var types = [
-  'flat',
-  'house',
-  'bungalo',
-];
-
-var features = [
-  'wifi',
-  'dishwasher',
-  'parking',
-  'washer',
-  'elevator',
-  'conditioner',
-];
-
-var photos = [
-  'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
-  'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-  'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
-];
-
 function getRandomInInterval(min, max) {
   return Math.round(Math.random() * (max - min) + min);
 }
@@ -48,8 +16,40 @@ function compareWithRandomResult() {
 
 function generateAdverts(advertsNumber) {
   var adverts = [];
-  for (var i = 0; i < advertsNumber; i++) {
 
+  var titles = [
+    'Большая уютная квартира',
+    'Маленькая неуютная квартира',
+    'Огромный прекрасный дворец',
+    'Маленький ужасный дворец',
+    'Красивый гостевой домик',
+    'Некрасивый негостеприимный домик',
+    'Уютное бунгало далеко от моря',
+    'Неуютное бунгало по колено в воде',
+  ];
+
+  var types = [
+    'flat',
+    'house',
+    'bungalo',
+  ];
+
+  var features = [
+    'wifi',
+    'dishwasher',
+    'parking',
+    'washer',
+    'elevator',
+    'conditioner',
+  ];
+
+  var photos = [
+    'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+    'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+    'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
+  ];
+
+  for (var i = 0; i < advertsNumber; i++) {
     var locationX = getRandomInInterval(300, 900);
     var locationY = getRandomInInterval(150, 500);
 
