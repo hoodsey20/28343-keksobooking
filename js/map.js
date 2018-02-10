@@ -155,6 +155,11 @@ var renderOfferCard = function (apartmentItem) {
   var paragraphElements = offerCard.querySelectorAll('p');
   var featureElements = offerCard.querySelectorAll('.feature');
   var picturesContainerElement = offerCard.querySelector('.popup__pictures');
+  var closeElement = offerCard.querySelector('.popup__close');
+
+  var removeOfferCard = function () {
+    offerCard.remove();
+  };
 
   var offerType = {
     flat: 'Квартира',
@@ -170,6 +175,7 @@ var renderOfferCard = function (apartmentItem) {
   offerCard.querySelector('.popup__price').textContent = apartmentItem.offer.price + '₽/ночь';
   offerCard.querySelector('h4').textContent = offerType[apartmentItem.offer.type];
 
+
   paragraphElements[0].textContent = apartmentItem.offer.address;
   paragraphElements[2].textContent = apartmentItem.offer.rooms + ' ' + currentRoomsWordForm + ' для ' + apartmentItem.offer.guests + ' ' + guestsRoomsWordForm;
   paragraphElements[3].textContent = 'Заезд после ' + apartmentItem.offer.checkin + ', выезд до ' + apartmentItem.offer.checkout;
@@ -177,7 +183,7 @@ var renderOfferCard = function (apartmentItem) {
 
   deleteOddFeatures(featureElements, apartmentItem.offer.features);
   renderApartmentPictures(picturesContainerElement, apartmentItem.offer.photos);
-
+  closeElement.addEventListener('click', removeOfferCard);
   mapFiltersContainerElement.parentNode.insertBefore(offerCard, mapFiltersContainerElement);
 };
 
