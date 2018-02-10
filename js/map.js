@@ -83,6 +83,10 @@ function generateAdverts(advertsNumber) {
 
 var createOfferPinClickHandler = function (array, index) {
   return function () {
+    var offerCardElement = document.querySelector('.map__card');
+    if (offerCardElement) {
+      offerCardElement.remove();
+    }
     renderOfferCard(array[index]);
   };
 };
