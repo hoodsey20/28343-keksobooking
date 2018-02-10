@@ -193,7 +193,7 @@ var advertFormElement = document.querySelector('.notice__form');
 var advertFormFieldsetElements = advertFormElement.querySelectorAll('fieldset');
 var mainPinElement = document.querySelector('.map__pin--main');
 
-var setActiveState = function () {
+var setActiveStateHandler = function () {
   advertFormElement.classList.remove('notice__form--disabled');
   mapElement.classList.remove('map--faded');
   for (var i = 0; i < advertFormFieldsetElements.length; i++) {
@@ -223,10 +223,13 @@ var mainPinMouseupHandler = function (evt) {
   setAddress(mainPinXCoordinate, mainPinYCoordinate);
 };
 
+var addMapPinsHandler = function () {
+  renderMapPins(adverts);
+  mainPinElement.removeEventListener('mouseup', addMapPinsHandler);
+};
+
 unsetActiveState();
 
-mainPinElement.addEventListener('mouseup', function (evt) {
-  setActiveState();
-  mainPinMouseupHandler(evt);
-  renderMapPins(adverts);
-});
+mainPinElement.addEventListener('mouseup', setActiveStateHandler);
+mainPinElement.addEventListener('mouseup', addMapPinsHandler);
+mainPinElement.addEventListener('mouseup', mainPinMouseupHandler);
