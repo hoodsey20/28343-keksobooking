@@ -81,6 +81,12 @@ function generateAdverts(advertsNumber) {
   return adverts;
 }
 
+var createOfferPinClickHandler = function (array, index) {
+  return function () {
+    renderOfferCard(array[index]);
+  };
+};
+
 var renderMapPins = function (array) {
   var mapPinsContainerELement = document.querySelector('.map__pins');
   var mapPinsFragment = document.createDocumentFragment();
@@ -89,11 +95,13 @@ var renderMapPins = function (array) {
   for (var i = 0; i < array.length; i++) {
     var pin = mapPinTemplate.cloneNode(true);
     var pinImg = pin.querySelector('img');
+    var offerPinClickHandler = createOfferPinClickHandler(array, i);
 
-    pin.dataset.offerindex = i;
+    pin.addEventListener('click', offerPinClickHandler);
     pin.style.left = array[i].location.x + 'px';
     pin.style.top = array[i].location.y - MAP_PIN_HEIGHT / 2 + 'px';
     pinImg.src = array[i].author.avatar;
+
     mapPinsFragment.appendChild(pin);
   }
 
@@ -175,17 +183,6 @@ var advertFormElement = document.querySelector('.notice__form');
 var advertFormFieldsetElements = advertFormElement.querySelectorAll('fieldset');
 var mainPinElement = document.querySelector('.map__pin--main');
 
-var findParentByClass = function (elNode, classString) {
-  var target = elNode;
-  while (target !== document) {
-    if (target.classList.contains(classString)) {
-      return target;
-    }
-    target = target.parentNode;
-  }
-  return false;
-};
-
 var setActiveState = function () {
   advertFormElement.classList.remove('notice__form--disabled');
   mapElement.classList.remove('map--faded');
@@ -216,14 +213,6 @@ var mainPinMouseupHandler = function (evt) {
   setAddress(mainPinXCoordinate, mainPinYCoordinate);
 };
 
-var offerPinClickHandler = function (evt) {
-  var clickedButtonElement = findParentByClass(evt.target, 'map__pin');
-
-  if (!!clickedButtonElement && clickedButtonElement.dataset.offerindex) {
-    renderOfferCard(adverts[clickedButtonElement.dataset.offerindex]);
-  }
-};
-
 unsetActiveState();
 
 mainPinElement.addEventListener('mouseup', function (evt) {
@@ -231,5 +220,3 @@ mainPinElement.addEventListener('mouseup', function (evt) {
   mainPinMouseupHandler(evt);
   renderMapPins(adverts);
 });
-
-mapElement.addEventListener('click', offerPinClickHandler);
