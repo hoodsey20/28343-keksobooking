@@ -81,12 +81,16 @@ function generateAdverts(advertsNumber) {
   return adverts;
 }
 
+var removeOfferCard = function () {
+  var offerCardElement = document.querySelector('.map__card');
+  if (offerCardElement) {
+    offerCardElement.remove();
+  }
+};
+
 var createOfferPinClickHandler = function (array, index) {
   return function () {
-    var offerCardElement = document.querySelector('.map__card');
-    if (offerCardElement) {
-      offerCardElement.remove();
-    }
+    removeOfferCard();
     renderOfferCard(array[index]);
   };
 };
@@ -157,10 +161,6 @@ var renderOfferCard = function (apartmentItem) {
   var picturesContainerElement = offerCard.querySelector('.popup__pictures');
   var closeElement = offerCard.querySelector('.popup__close');
 
-  var removeOfferCard = function () {
-    offerCard.remove();
-  };
-
   var offerType = {
     flat: 'Квартира',
     bungalo: 'Бунгало',
@@ -174,7 +174,6 @@ var renderOfferCard = function (apartmentItem) {
   offerCard.querySelector('h3').textContent = apartmentItem.offer.title;
   offerCard.querySelector('.popup__price').textContent = apartmentItem.offer.price + '₽/ночь';
   offerCard.querySelector('h4').textContent = offerType[apartmentItem.offer.type];
-
 
   paragraphElements[0].textContent = apartmentItem.offer.address;
   paragraphElements[2].textContent = apartmentItem.offer.rooms + ' ' + currentRoomsWordForm + ' для ' + apartmentItem.offer.guests + ' ' + guestsRoomsWordForm;
