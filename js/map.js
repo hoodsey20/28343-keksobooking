@@ -88,11 +88,20 @@ var removeOfferCard = function () {
   }
 };
 
-var createOfferPinClickHandler = function (array, index) {
-  return function () {
+var createOfferPin = function (offer, pinTemplate) {
+  var pin = pinTemplate.cloneNode(true);
+  var pinImg = pin.querySelector('img');
+
+  pin.style.left = offer.location.x + 'px';
+  pin.style.top = offer.location.y - MAP_PIN_HEIGHT / 2 + 'px';
+  pinImg.src = offer.author.avatar;
+
+  pin.addEventListener('click', function () {
     removeOfferCard();
-    renderOfferCard(array[index]);
-  };
+    renderOfferCard(offer);
+  });
+
+  return pin;
 };
 
 var renderMapPins = function (offers) {
@@ -101,16 +110,7 @@ var renderMapPins = function (offers) {
   var mapPinTemplate = document.querySelector('template').content.querySelector('.map__pin');
 
   for (var i = 0; i < offers.length; i++) {
-    var pin = mapPinTemplate.cloneNode(true);
-    var pinImg = pin.querySelector('img');
-    var offerPinClickHandler = createOfferPinClickHandler(offers, i);
-
-    pin.addEventListener('click', offerPinClickHandler);
-    pin.style.left = offers[i].location.x + 'px';
-    pin.style.top = offers[i].location.y - MAP_PIN_HEIGHT / 2 + 'px';
-    pinImg.src = offers[i].author.avatar;
-
-    mapPinsFragment.appendChild(pin);
+    mapPinsFragment.appendChild(createOfferPin(offers[i], mapPinTemplate));
   }
 
   mapPinsContainerELement.appendChild(mapPinsFragment);
