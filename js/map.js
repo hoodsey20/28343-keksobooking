@@ -6,6 +6,8 @@ var MAIN_PIN_PEAK_HEIGHT = 22;
 var MAP_PIN_HEIGHT = 70;
 var OFFER_QUANTITY = 8;
 
+var templateElement = document.querySelector('template');
+
 function getRandomInInterval(min, max) {
   return Math.round(Math.random() * (max - min) + min);
 }
@@ -88,8 +90,9 @@ var removeOfferCard = function () {
   }
 };
 
-var createOfferPin = function (offer, pinTemplate) {
-  var pin = pinTemplate.cloneNode(true);
+var createOfferPin = function (offer) {
+  var mapPinTemplate = templateElement.content.querySelector('.map__pin');
+  var pin = mapPinTemplate.cloneNode(true);
   var pinImg = pin.querySelector('img');
 
   pin.style.left = offer.location.x + 'px';
@@ -107,10 +110,9 @@ var createOfferPin = function (offer, pinTemplate) {
 var renderMapPins = function (offers) {
   var mapPinsContainerELement = document.querySelector('.map__pins');
   var mapPinsFragment = document.createDocumentFragment();
-  var mapPinTemplate = document.querySelector('template').content.querySelector('.map__pin');
 
   for (var i = 0; i < offers.length; i++) {
-    mapPinsFragment.appendChild(createOfferPin(offers[i], mapPinTemplate));
+    mapPinsFragment.appendChild(createOfferPin(offers[i]));
   }
 
   mapPinsContainerELement.appendChild(mapPinsFragment);
@@ -154,7 +156,7 @@ var getRightWorldForm = function (num, one, two, five) {
 
 var renderOfferCard = function (offerItem) {
   var mapFiltersContainerElement = document.querySelector('.map__filters-container');
-  var offerCardTemplate = document.querySelector('template').content.querySelector('.map__card');
+  var offerCardTemplate = templateElement.content.querySelector('.map__card');
   var offerCard = offerCardTemplate.cloneNode(true);
   var paragraphElements = offerCard.querySelectorAll('p');
   var featureElements = offerCard.querySelectorAll('.feature');
