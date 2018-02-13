@@ -208,6 +208,21 @@ var unsetActiveState = function () {
   for (var i = 0; i < offerFormFieldsetElements.length; i++) {
     offerFormFieldsetElements[i].disabled = true;
   }
+  removeMapPins();
+};
+
+var removeMapPins = function () {
+  var pinsElements = document.querySelectorAll('.map__pin');
+
+  if (pinsElements.length < 2) {
+    return;
+  }
+
+  pinsElements = Array.prototype.slice.call(pinsElements, 1);
+
+  for (var i = 0; i < pinsElements.length; i++) {
+    pinsElements[i].remove();
+  }
 };
 
 var setAddress = function (xCoordinate, yCoordinate) {
@@ -234,3 +249,48 @@ unsetActiveState();
 mainPinElement.addEventListener('mouseup', setActiveStateHandler);
 mainPinElement.addEventListener('mouseup', addMapPinsHandler);
 mainPinElement.addEventListener('mouseup', mainPinMouseupHandler);
+
+var submitBtnElement = offerFormElement.querySelector('.form__submit');
+var resetBtnElement = offerFormElement.querySelector('.form__reset');
+var inputElements = offerFormElement.querySelectorAll('input');
+var roomsInputElement = offerFormElement.querySelector('#room_number');
+var capacityInputElement = offerFormElement.querySelector('#capacity');
+
+var highlightInvalidInput = function (input) {
+  input.classList.add('invalid-value-input');
+};
+
+var resetInvalidHighlightingInput = function (input) {
+  input.classList.remove('invalid-value-input');
+};
+
+var checkGuestsCapacity = function () {
+  if (Number(roomsInputElement.value) < Number(capacityInputElement.value)) {
+    capacityInputElement.setCustomValidity('Количество гостей не может превышать количество комнат');
+    highlightInvalidInput(capacityInputElement);
+  } else {
+    capacityInputElement.setCustomValidity('');
+    resetInvalidHighlightingInput(capacityInputElement);
+  }
+};
+
+submitBtnElement.addEventListener('click', function () {
+  for (var i = 0; i < inputElements.length; i++) {
+    resetInvalidHighlightingInput(inputElements[i]);
+  }
+  checkGuestsCapacity();
+});
+
+resetBtnElement.addEventListener('click', function () {
+  offerFormElement.reset();
+  unsetActiveState();
+});
+
+for (var i = 0; i < inputElements.length; i++) {
+  inputElements[i].addEventListener('invalid', function (evt) {
+    highlightInvalidInput(evt.target);
+  });
+}
+
+roomsInputElement.addEventListener('change', checkGuestsCapacity);
+capacityInputElement.addEventListener('change', checkGuestsCapacity);
