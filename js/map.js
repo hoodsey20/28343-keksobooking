@@ -8,15 +8,15 @@ var OFFER_QUANTITY = 8;
 
 var templateElement = document.querySelector('template');
 
-function getRandomInInterval(min, max) {
+var getRandomInInterval = function (min, max) {
   return Math.round(Math.random() * (max - min) + min);
-}
+};
 
-function compareWithRandomResult() {
+var compareWithRandomResult = function () {
   return Math.random() - 0.5;
-}
+};
 
-function generateOffers(numberOfOffers) {
+var generateOffers = function (numberOfOffers) {
   var offers = [];
 
   var titles = [
@@ -81,7 +81,7 @@ function generateOffers(numberOfOffers) {
   }
 
   return offers;
-}
+};
 
 var removeOfferCard = function () {
   var offerCardElement = document.querySelector('.map__card');
@@ -245,12 +245,6 @@ var addMapPinsHandler = function () {
   mainPinElement.removeEventListener('mouseup', addMapPinsHandler);
 };
 
-unsetActiveState();
-
-mainPinElement.addEventListener('mouseup', setActiveStateHandler);
-mainPinElement.addEventListener('mouseup', addMapPinsHandler);
-mainPinElement.addEventListener('mouseup', mainPinMouseupHandler);
-
 var submitBtnElement = offerFormElement.querySelector('.form__submit');
 var resetBtnElement = offerFormElement.querySelector('.form__reset');
 var inputElements = offerFormElement.querySelectorAll('input');
@@ -268,7 +262,7 @@ var resetInvalidHighlightingInput = function (input) {
   input.classList.remove('invalid-value-input');
 };
 
-var checkGuestsCapacity = function () {
+var checkGuestsCapacityHandler = function () {
   var rooms = Number(roomsInputElement.value);
   var guests = Number(capacityInputElement.value);
   var setInvalidCapacity = function (customValidityText) {
@@ -290,7 +284,7 @@ var checkGuestsCapacity = function () {
   }
 };
 
-var checkPricePerNight = function () {
+var checkPricePerNightHandler = function () {
   var lodgingType = typeInputElement.value;
   var priceInputElement = offerFormElement.querySelector('#price');
 
@@ -310,7 +304,7 @@ var checkPricePerNight = function () {
   }
 };
 
-var synchronizeArrivalandDeparture = function (evt) {
+var synchronizeArrivalandDepartureHandler = function (evt) {
   if (evt.target === arrivalInputElement) {
     departureInputElement.value = evt.target.value;
   } else {
@@ -330,17 +324,22 @@ var resetFormHandler = function () {
   unsetActiveState();
 };
 
+unsetActiveState();
+
+mainPinElement.addEventListener('mouseup', setActiveStateHandler);
+mainPinElement.addEventListener('mouseup', addMapPinsHandler);
+mainPinElement.addEventListener('mouseup', mainPinMouseupHandler);
+
+submitBtnElement.addEventListener('click', submitFormHandler);
+resetBtnElement.addEventListener('click', resetFormHandler);
+departureInputElement.addEventListener('change', synchronizeArrivalandDepartureHandler);
+arrivalInputElement.addEventListener('change', synchronizeArrivalandDepartureHandler);
+typeInputElement.addEventListener('change', checkPricePerNightHandler);
+roomsInputElement.addEventListener('change', checkGuestsCapacityHandler);
+capacityInputElement.addEventListener('change', checkGuestsCapacityHandler);
 
 for (var i = 0; i < inputElements.length; i++) {
   inputElements[i].addEventListener('invalid', function (evt) {
     highlightInvalidInput(evt.target);
   });
 }
-
-submitBtnElement.addEventListener('click', submitFormHandler);
-resetBtnElement.addEventListener('click', resetFormHandler);
-departureInputElement.addEventListener('change', synchronizeArrivalandDeparture);
-arrivalInputElement.addEventListener('change', synchronizeArrivalandDeparture);
-typeInputElement.addEventListener('change', checkPricePerNight);
-roomsInputElement.addEventListener('change', checkGuestsCapacity);
-capacityInputElement.addEventListener('change', checkGuestsCapacity);
