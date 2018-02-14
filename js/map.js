@@ -208,6 +208,7 @@ var unsetActiveState = function () {
   for (var i = 0; i < offerFormFieldsetElements.length; i++) {
     offerFormFieldsetElements[i].disabled = true;
   }
+  resetAllInvalidHighlighting();
   removeMapPins();
   removeOfferCard();
   mainPinElement.addEventListener('mouseup', addMapPinsHandler);
@@ -261,6 +262,13 @@ var highlightInvalidInput = function (input) {
 
 var resetInvalidHighlightingInput = function (input) {
   input.classList.remove('invalid-value-input');
+};
+
+var resetAllInvalidHighlighting = function () {
+  var invalidInputs = offerFormElement.querySelectorAll('.invalid-value-input');
+  for (var i = 0; i < invalidInputs.length; i++) {
+    resetInvalidHighlightingInput(invalidInputs[i]);
+  }
 };
 
 var checkGuestsCapacity = function () {
