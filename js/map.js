@@ -256,7 +256,8 @@ var inputElements = offerFormElement.querySelectorAll('input');
 var roomsInputElement = offerFormElement.querySelector('#room_number');
 var capacityInputElement = offerFormElement.querySelector('#capacity');
 var typeInputElement = offerFormElement.querySelector('#type');
-
+var arrivalInputElement = offerFormElement.querySelector('#timein');
+var departureInputElement = offerFormElement.querySelector('#timeout');
 
 var highlightInvalidInput = function (input) {
   input.classList.add('invalid-value-input');
@@ -308,6 +309,14 @@ var checkPricePerNight = function () {
   }
 };
 
+var synchronizeArrivalandDeparture = function (evt) {
+  if (evt.target === arrivalInputElement) {
+    departureInputElement.value = evt.target.value;
+  } else {
+    arrivalInputElement.value = evt.target.value;
+  }
+};
+
 submitBtnElement.addEventListener('click', function () {
   for (var i = 0; i < inputElements.length; i++) {
     resetInvalidHighlightingInput(inputElements[i]);
@@ -326,6 +335,9 @@ for (var i = 0; i < inputElements.length; i++) {
   });
 }
 
+
+departureInputElement.addEventListener('change', synchronizeArrivalandDeparture);
+arrivalInputElement.addEventListener('change', synchronizeArrivalandDeparture);
 typeInputElement.addEventListener('change', checkPricePerNight);
 roomsInputElement.addEventListener('change', checkGuestsCapacity);
 capacityInputElement.addEventListener('change', checkGuestsCapacity);
