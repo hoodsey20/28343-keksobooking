@@ -263,7 +263,7 @@ var resetInvalidHighlightingInput = function (input) {
   input.classList.remove('invalid-value-input');
 };
 
-var checkGuestsCapacityHandler = function () {
+var checkGuestsCapacity = function () {
   var rooms = Number(roomsInputElement.value);
   var guests = Number(capacityInputElement.value);
   var setInvalidCapacity = function (customValidityText) {
@@ -285,7 +285,7 @@ var checkGuestsCapacityHandler = function () {
   }
 };
 
-var checkPricePerNightHandler = function () {
+var checkPricePerNight = function () {
   var lodgingType = typeInputElement.value;
   var priceInputElement = offerFormElement.querySelector('#price');
 
@@ -305,7 +305,7 @@ var checkPricePerNightHandler = function () {
   }
 };
 
-var synchronizeArrivalandDepartureHandler = function (evt) {
+var changeArrivalandDepartureHandler = function (evt) {
   if (evt.target === arrivalInputElement) {
     departureInputElement.value = evt.target.value;
   } else {
@@ -333,11 +333,11 @@ mainPinElement.addEventListener('mouseup', mainPinMouseupHandler);
 
 submitBtnElement.addEventListener('click', submitFormHandler);
 resetBtnElement.addEventListener('click', resetFormHandler);
-departureInputElement.addEventListener('change', synchronizeArrivalandDepartureHandler);
-arrivalInputElement.addEventListener('change', synchronizeArrivalandDepartureHandler);
-typeInputElement.addEventListener('change', checkPricePerNightHandler);
-roomsInputElement.addEventListener('change', checkGuestsCapacityHandler);
-capacityInputElement.addEventListener('change', checkGuestsCapacityHandler);
+departureInputElement.addEventListener('change', changeArrivalandDepartureHandler);
+arrivalInputElement.addEventListener('change', changeArrivalandDepartureHandler);
+typeInputElement.addEventListener('change', checkPricePerNight);
+roomsInputElement.addEventListener('change', checkGuestsCapacity);
+capacityInputElement.addEventListener('change', checkGuestsCapacity);
 
 for (var i = 0; i < inputElements.length; i++) {
   inputElements[i].addEventListener('invalid', function (evt) {
