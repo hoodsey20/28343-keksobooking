@@ -318,17 +318,18 @@ var synchronizeArrivalandDeparture = function (evt) {
   }
 };
 
-submitBtnElement.addEventListener('click', function () {
+var submitFormHandler = function () {
   for (var i = 0; i < inputElements.length; i++) {
     resetInvalidHighlightingInput(inputElements[i]);
   }
   checkGuestsCapacity();
-});
+};
 
-resetBtnElement.addEventListener('click', function () {
+var resetFormHandler = function () {
   offerFormElement.reset();
   unsetActiveState();
-});
+};
+
 
 for (var i = 0; i < inputElements.length; i++) {
   inputElements[i].addEventListener('invalid', function (evt) {
@@ -336,7 +337,8 @@ for (var i = 0; i < inputElements.length; i++) {
   });
 }
 
-
+submitBtnElement.addEventListener('click', submitFormHandler);
+resetBtnElement.addEventListener('click', resetFormHandler);
 departureInputElement.addEventListener('change', synchronizeArrivalandDeparture);
 arrivalInputElement.addEventListener('change', synchronizeArrivalandDeparture);
 typeInputElement.addEventListener('change', checkPricePerNight);
