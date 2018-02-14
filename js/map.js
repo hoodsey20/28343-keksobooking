@@ -265,12 +265,24 @@ var resetInvalidHighlightingInput = function (input) {
 };
 
 var checkGuestsCapacity = function () {
-  if (Number(roomsInputElement.value) < Number(capacityInputElement.value)) {
-    capacityInputElement.setCustomValidity('Количество гостей не может превышать количество комнат');
+  var rooms = Number(roomsInputElement.value);
+  var guests = Number(capacityInputElement.value);
+  var setInvalidCapacity = function (customValidityText) {
+    capacityInputElement.setCustomValidity(customValidityText);
     highlightInvalidInput(capacityInputElement);
-  } else {
-    capacityInputElement.setCustomValidity('');
-    resetInvalidHighlightingInput(capacityInputElement);
+  };
+
+  capacityInputElement.setCustomValidity('');
+  resetInvalidHighlightingInput(capacityInputElement);
+
+  if (rooms !== 100 && guests !== 0) {
+    if (rooms < guests) {
+      setInvalidCapacity('Количество гостей не может превышать количество комнат');
+    }
+  } else if (rooms === 100 && guests !== 0) {
+    setInvalidCapacity('Количество комнат не для гостей');
+  } else if (rooms !== 100 && guests === 0) {
+    setInvalidCapacity('Необходимо указать большее количество гостей');
   }
 };
 
