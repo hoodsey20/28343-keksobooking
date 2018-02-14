@@ -255,6 +255,8 @@ var resetBtnElement = offerFormElement.querySelector('.form__reset');
 var inputElements = offerFormElement.querySelectorAll('input');
 var roomsInputElement = offerFormElement.querySelector('#room_number');
 var capacityInputElement = offerFormElement.querySelector('#capacity');
+var typeInputElement = offerFormElement.querySelector('#type');
+
 
 var highlightInvalidInput = function (input) {
   input.classList.add('invalid-value-input');
@@ -286,6 +288,26 @@ var checkGuestsCapacity = function () {
   }
 };
 
+var checkPricePerNight = function () {
+  var lodgingType = typeInputElement.value;
+  var priceInputElement = offerFormElement.querySelector('#price');
+
+  switch (lodgingType) {
+    case 'flat':
+      priceInputElement.min = 1000;
+      break;
+    case 'bungalo':
+      priceInputElement.min = 0;
+      break;
+    case 'house':
+      priceInputElement.min = 5000;
+      break;
+    case 'palace':
+      priceInputElement.min = 10000;
+      break;
+  }
+};
+
 submitBtnElement.addEventListener('click', function () {
   for (var i = 0; i < inputElements.length; i++) {
     resetInvalidHighlightingInput(inputElements[i]);
@@ -304,5 +326,6 @@ for (var i = 0; i < inputElements.length; i++) {
   });
 }
 
+typeInputElement.addEventListener('change', checkPricePerNight);
 roomsInputElement.addEventListener('change', checkGuestsCapacity);
 capacityInputElement.addEventListener('change', checkGuestsCapacity);
