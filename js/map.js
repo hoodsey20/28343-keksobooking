@@ -209,6 +209,7 @@ var unsetActiveState = function () {
     offerFormFieldsetElements[i].disabled = true;
   }
   removeMapPins();
+  mainPinElement.addEventListener('mouseup', addMapPinsHandler);
 };
 
 var removeMapPins = function () {
