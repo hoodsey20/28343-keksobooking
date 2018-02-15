@@ -251,7 +251,6 @@ var submitBtnElement = offerFormElement.querySelector('.form__submit');
 var resetBtnElement = offerFormElement.querySelector('.form__reset');
 var inputElements = offerFormElement.querySelectorAll('input');
 var roomsInputElement = offerFormElement.querySelector('#room_number');
-var capacityInputElement = offerFormElement.querySelector('#capacity');
 var typeInputElement = offerFormElement.querySelector('#type');
 var arrivalInputElement = offerFormElement.querySelector('#timein');
 var departureInputElement = offerFormElement.querySelector('#timeout');
@@ -271,25 +270,61 @@ var resetAllInvalidHighlighting = function () {
   }
 };
 
-var checkGuestsCapacity = function () {
-  var rooms = Number(roomsInputElement.value);
-  var guests = Number(capacityInputElement.value);
-  var setInvalidCapacity = function (customValidityText) {
-    capacityInputElement.setCustomValidity(customValidityText);
-    highlightInvalidInput(capacityInputElement);
-  };
+var findOptionByValue = function (selectElement, value) {
+  var optionElements = selectElement.querySelectorAll('option');
+  var currentOptionElement = null;
 
-  capacityInputElement.setCustomValidity('');
-  resetInvalidHighlightingInput(capacityInputElement);
-
-  if (rooms !== 100 && guests !== 0) {
-    if (rooms < guests) {
-      setInvalidCapacity('Количество гостей не может превышать количество комнат');
+  for (var i = 0; i < optionElements.length; i++) {
+    if (optionElements[i].value === value) {
+      currentOptionElement = optionElements[i];
     }
-  } else if (rooms === 100 && guests !== 0) {
-    setInvalidCapacity('Количество комнат не для гостей');
-  } else if (rooms !== 100 && guests === 0) {
-    setInvalidCapacity('Необходимо указать большее количество гостей');
+  }
+
+  return currentOptionElement;
+};
+
+var checkDisabledOptions = function () {
+  var selectElements = offerFormElement.querySelectorAll('select');
+
+  for (var i = 0; i < selectElements.length; i++) {
+    var selectedOptionElement = findOptionByValue(selectElements[i], selectElements[i].value);
+    resetInvalidHighlightingInput(selectElements[i]);
+    selectElements[i].setCustomValidity('');
+
+    if (selectedOptionElement.disabled) {
+      highlightInvalidInput(selectElements[i]);
+      selectElements[i].setCustomValidity('Данный вариант не может быть принят');
+    }
+  }
+};
+
+var setDisabledByValue = function (elements, values) {
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].disabled = false;
+    if (values.indexOf(elements[i].value) > -1) {
+      elements[i].disabled = true;
+    }
+  }
+};
+
+var roomsInputHandler = function (evt) {
+  var capacityInputElement = offerFormElement.querySelector('#capacity');
+  var capacityOptionElements = capacityInputElement.querySelectorAll('option');
+  var roomsInputValue = evt.target.value;
+
+  switch (roomsInputValue) {
+    case '1':
+      setDisabledByValue(capacityOptionElements, ['0', '2', '3']);
+      break;
+    case '2':
+      setDisabledByValue(capacityOptionElements, ['0', '3']);
+      break;
+    case '3':
+      setDisabledByValue(capacityOptionElements, ['0']);
+      break;
+    case '100':
+      setDisabledByValue(capacityOptionElements, ['1', '2', '3']);
+      break;
   }
 };
 
@@ -325,7 +360,7 @@ var submitFormHandler = function () {
   for (var i = 0; i < inputElements.length; i++) {
     resetInvalidHighlightingInput(inputElements[i]);
   }
-  checkGuestsCapacity();
+  checkDisabledOptions();
 };
 
 var resetFormHandler = function () {
@@ -344,8 +379,7 @@ resetBtnElement.addEventListener('click', resetFormHandler);
 departureInputElement.addEventListener('change', changeArrivalandDepartureHandler);
 arrivalInputElement.addEventListener('change', changeArrivalandDepartureHandler);
 typeInputElement.addEventListener('change', checkPricePerNight);
-roomsInputElement.addEventListener('change', checkGuestsCapacity);
-capacityInputElement.addEventListener('change', checkGuestsCapacity);
+roomsInputElement.addEventListener('change', roomsInputHandler);
 
 for (var i = 0; i < inputElements.length; i++) {
   inputElements[i].addEventListener('invalid', function (evt) {
