@@ -230,7 +230,7 @@ var removeMapPins = function () {
 
 var setAddress = function (xCoordinate, yCoordinate) {
   var adressInputElement = document.querySelector('#address');
-  adressInputElement.value = xCoordinate + ', ' + yCoordinate;
+  adressInputElement.value = Math.round(xCoordinate) + ', ' + Math.round(yCoordinate);
 };
 
 var mainPinMouseupHandler = function (evt) {
