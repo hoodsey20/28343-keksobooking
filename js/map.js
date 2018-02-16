@@ -2,13 +2,6 @@
 
 var templateElement = document.querySelector('template');
 
-var removeOfferCard = function () {
-  var offerCardElement = document.querySelector('.map__card');
-  if (offerCardElement) {
-    offerCardElement.remove();
-  }
-};
-
 var createOfferPin = function (offer) {
   var mapPinTemplate = templateElement.content.querySelector('.map__pin');
   var pin = mapPinTemplate.cloneNode(true);
@@ -19,7 +12,7 @@ var createOfferPin = function (offer) {
   pinImg.src = offer.author.avatar;
 
   pin.addEventListener('click', function () {
-    removeOfferCard();
+    window.removeOfferCard();
     window.renderOfferCard(offer);
   });
 
@@ -59,7 +52,7 @@ var unsetActiveState = function () {
   }
   resetAllInvalidHighlighting();
   removeMapPins();
-  removeOfferCard();
+  window.removeOfferCard();
   mainPinElement.addEventListener('mouseup', addMapPinsHandler);
 };
 

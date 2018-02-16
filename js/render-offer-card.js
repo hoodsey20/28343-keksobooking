@@ -53,7 +53,7 @@
 
     deleteOddFeatures(featureElements, offerItem.offer.features);
     renderOfferPictures(picturesContainerElement, offerItem.offer.photos);
-    closeElement.addEventListener('click', removeOfferCard);
+    closeElement.addEventListener('click', window.removeOfferCard);
     mapFiltersContainerElement.parentNode.insertBefore(offerCard, mapFiltersContainerElement);
   };
 })();
