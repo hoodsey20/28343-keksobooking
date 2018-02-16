@@ -8,15 +8,15 @@ var OFFER_QUANTITY = 8;
 
 var templateElement = document.querySelector('template');
 
-function getRandomInInterval(min, max) {
+var getRandomInInterval = function (min, max) {
   return Math.round(Math.random() * (max - min) + min);
-}
+};
 
-function compareWithRandomResult() {
+var compareWithRandomResult = function () {
   return Math.random() - 0.5;
-}
+};
 
-function generateOffers(numberOfOffers) {
+var generateOffers = function (numberOfOffers) {
   var offers = [];
 
   var titles = [
@@ -81,7 +81,7 @@ function generateOffers(numberOfOffers) {
   }
 
   return offers;
-}
+};
 
 var removeOfferCard = function () {
   var offerCardElement = document.querySelector('.map__card');
@@ -208,11 +208,29 @@ var unsetActiveState = function () {
   for (var i = 0; i < offerFormFieldsetElements.length; i++) {
     offerFormFieldsetElements[i].disabled = true;
   }
+  resetAllInvalidHighlighting();
+  removeMapPins();
+  removeOfferCard();
+  mainPinElement.addEventListener('mouseup', addMapPinsHandler);
+};
+
+var removeMapPins = function () {
+  var pinsElements = document.querySelectorAll('.map__pin');
+
+  if (pinsElements.length < 2) {
+    return;
+  }
+
+  pinsElements = Array.prototype.slice.call(pinsElements, 1);
+
+  for (var i = 0; i < pinsElements.length; i++) {
+    pinsElements[i].remove();
+  }
 };
 
 var setAddress = function (xCoordinate, yCoordinate) {
   var adressInputElement = document.querySelector('#address');
-  adressInputElement.value = xCoordinate + ', ' + yCoordinate;
+  adressInputElement.value = Math.round(xCoordinate) + ', ' + Math.round(yCoordinate);
 };
 
 var mainPinMouseupHandler = function (evt) {
@@ -229,8 +247,142 @@ var addMapPinsHandler = function () {
   mainPinElement.removeEventListener('mouseup', addMapPinsHandler);
 };
 
+var submitBtnElement = offerFormElement.querySelector('.form__submit');
+var resetBtnElement = offerFormElement.querySelector('.form__reset');
+var inputElements = offerFormElement.querySelectorAll('input');
+var roomsInputElement = offerFormElement.querySelector('#room_number');
+var typeInputElement = offerFormElement.querySelector('#type');
+var arrivalInputElement = offerFormElement.querySelector('#timein');
+var departureInputElement = offerFormElement.querySelector('#timeout');
+
+var highlightInvalidInput = function (input) {
+  input.classList.add('invalid-value-input');
+};
+
+var resetInvalidHighlightingInput = function (input) {
+  input.classList.remove('invalid-value-input');
+};
+
+var resetAllInvalidHighlighting = function () {
+  var invalidInputs = offerFormElement.querySelectorAll('.invalid-value-input');
+  for (var i = 0; i < invalidInputs.length; i++) {
+    resetInvalidHighlightingInput(invalidInputs[i]);
+  }
+};
+
+var findOptionByValue = function (selectElement, value) {
+  var optionElements = selectElement.querySelectorAll('option');
+  var currentOptionElement = null;
+
+  for (var i = 0; i < optionElements.length; i++) {
+    if (optionElements[i].value === value) {
+      currentOptionElement = optionElements[i];
+    }
+  }
+
+  return currentOptionElement;
+};
+
+var checkDisabledOptions = function () {
+  var selectElements = offerFormElement.querySelectorAll('select');
+
+  for (var i = 0; i < selectElements.length; i++) {
+    var selectedOptionElement = findOptionByValue(selectElements[i], selectElements[i].value);
+    resetInvalidHighlightingInput(selectElements[i]);
+    selectElements[i].setCustomValidity('');
+
+    if (selectedOptionElement.disabled) {
+      highlightInvalidInput(selectElements[i]);
+      selectElements[i].setCustomValidity('Данный вариант не может быть принят');
+    }
+  }
+};
+
+var setDisabledByValue = function (elements, values) {
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].disabled = false;
+    if (values.indexOf(elements[i].value) > -1) {
+      elements[i].disabled = true;
+    }
+  }
+};
+
+var roomsInputHandler = function (evt) {
+  var capacityInputElement = offerFormElement.querySelector('#capacity');
+  var capacityOptionElements = capacityInputElement.querySelectorAll('option');
+  var roomsInputValue = evt.target.value;
+
+  switch (roomsInputValue) {
+    case '1':
+      setDisabledByValue(capacityOptionElements, ['0', '2', '3']);
+      break;
+    case '2':
+      setDisabledByValue(capacityOptionElements, ['0', '3']);
+      break;
+    case '3':
+      setDisabledByValue(capacityOptionElements, ['0']);
+      break;
+    case '100':
+      setDisabledByValue(capacityOptionElements, ['1', '2', '3']);
+      break;
+  }
+};
+
+var checkPricePerNight = function () {
+  var lodgingType = typeInputElement.value;
+  var priceInputElement = offerFormElement.querySelector('#price');
+
+  switch (lodgingType) {
+    case 'flat':
+      priceInputElement.min = 1000;
+      break;
+    case 'bungalo':
+      priceInputElement.min = 0;
+      break;
+    case 'house':
+      priceInputElement.min = 5000;
+      break;
+    case 'palace':
+      priceInputElement.min = 10000;
+      break;
+  }
+};
+
+var changeArrivalandDepartureHandler = function (evt) {
+  if (evt.target === arrivalInputElement) {
+    departureInputElement.value = evt.target.value;
+  } else {
+    arrivalInputElement.value = evt.target.value;
+  }
+};
+
+var submitFormHandler = function () {
+  for (var i = 0; i < inputElements.length; i++) {
+    resetInvalidHighlightingInput(inputElements[i]);
+  }
+  checkDisabledOptions();
+};
+
+var resetFormHandler = function () {
+  offerFormElement.reset();
+  unsetActiveState();
+};
+
 unsetActiveState();
 
 mainPinElement.addEventListener('mouseup', setActiveStateHandler);
 mainPinElement.addEventListener('mouseup', addMapPinsHandler);
 mainPinElement.addEventListener('mouseup', mainPinMouseupHandler);
+
+submitBtnElement.addEventListener('click', submitFormHandler);
+resetBtnElement.addEventListener('click', resetFormHandler);
+departureInputElement.addEventListener('change', changeArrivalandDepartureHandler);
+arrivalInputElement.addEventListener('change', changeArrivalandDepartureHandler);
+typeInputElement.addEventListener('change', checkPricePerNight);
+roomsInputElement.addEventListener('change', roomsInputHandler);
+
+for (var i = 0; i < inputElements.length; i++) {
+  inputElements[i].addEventListener('invalid', function (evt) {
+    highlightInvalidInput(evt.target);
+  });
+}
