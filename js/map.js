@@ -20,7 +20,7 @@ var unsetActiveState = function () {
   for (var i = 0; i < offerFormFieldsetElements.length; i++) {
     offerFormFieldsetElements[i].disabled = true;
   }
-  resetAllInvalidHighlighting();
+  window.formUtil.resetAllInvalidHighlighting();
   window.removeMapPins();
   window.removeOfferCard();
   mainPinElement.addEventListener('mouseup', addMapPinsHandler);
@@ -53,31 +53,16 @@ var typeInputElement = offerFormElement.querySelector('#type');
 var arrivalInputElement = offerFormElement.querySelector('#timein');
 var departureInputElement = offerFormElement.querySelector('#timeout');
 
-var highlightInvalidInput = function (input) {
-  input.classList.add('invalid-value-input');
-};
-
-var resetInvalidHighlightingInput = function (input) {
-  input.classList.remove('invalid-value-input');
-};
-
-var resetAllInvalidHighlighting = function () {
-  var invalidInputs = offerFormElement.querySelectorAll('.invalid-value-input');
-  for (var i = 0; i < invalidInputs.length; i++) {
-    resetInvalidHighlightingInput(invalidInputs[i]);
-  }
-};
-
 var checkDisabledOptions = function () {
   var selectElements = offerFormElement.querySelectorAll('select');
 
   for (var i = 0; i < selectElements.length; i++) {
     var selectedOptionElement = window.util.findOptionByValue(selectElements[i], selectElements[i].value);
-    resetInvalidHighlightingInput(selectElements[i]);
+    window.formUtil.resetInvalidHighlightingInput(selectElements[i]);
     selectElements[i].setCustomValidity('');
 
     if (selectedOptionElement.disabled) {
-      highlightInvalidInput(selectElements[i]);
+      window.formUtil.highlightInvalidInput(selectElements[i]);
       selectElements[i].setCustomValidity('Данный вариант не может быть принят');
     }
   }
@@ -134,7 +119,7 @@ var changeArrivalandDepartureHandler = function (evt) {
 
 var submitFormHandler = function () {
   for (var i = 0; i < inputElements.length; i++) {
-    resetInvalidHighlightingInput(inputElements[i]);
+    window.formUtil.resetInvalidHighlightingInput(inputElements[i]);
   }
   checkDisabledOptions();
 };
@@ -159,6 +144,6 @@ roomsInputElement.addEventListener('change', roomsInputHandler);
 
 for (var i = 0; i < inputElements.length; i++) {
   inputElements[i].addEventListener('invalid', function (evt) {
-    highlightInvalidInput(evt.target);
+    window.formUtil.highlightInvalidInput(evt.target);
   });
 }
