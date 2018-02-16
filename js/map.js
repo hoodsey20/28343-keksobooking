@@ -1,11 +1,5 @@
 'use strict';
 
-var MAIN_PIN_WIDTH = 65;
-var MAIN_PIN_HEIGHT = 65;
-var MAIN_PIN_PEAK_HEIGHT = 22;
-var MAP_PIN_HEIGHT = 70;
-var OFFER_QUANTITY = 8;
-
 var templateElement = document.querySelector('template');
 
 var generateOffers = function (numberOfOffers) {
@@ -88,7 +82,7 @@ var createOfferPin = function (offer) {
   var pinImg = pin.querySelector('img');
 
   pin.style.left = offer.location.x + 'px';
-  pin.style.top = offer.location.y - MAP_PIN_HEIGHT / 2 + 'px';
+  pin.style.top = offer.location.y - window.consts.MAP_PIN_HEIGHT / 2 + 'px';
   pinImg.src = offer.author.avatar;
 
   pin.addEventListener('click', function () {
@@ -165,7 +159,7 @@ var renderOfferCard = function (offerItem) {
   mapFiltersContainerElement.parentNode.insertBefore(offerCard, mapFiltersContainerElement);
 };
 
-var generatedOffers = generateOffers(OFFER_QUANTITY);
+var generatedOffers = generateOffers(window.consts.OFFER_QUANTITY);
 var mapElement = document.querySelector('.map');
 var offerFormElement = document.querySelector('.notice__form');
 var offerFormFieldsetElements = offerFormElement.querySelectorAll('fieldset');
@@ -213,8 +207,8 @@ var setAddress = function (xCoordinate, yCoordinate) {
 var mainPinMouseupHandler = function (evt) {
   var mainPinOffsetLeft = evt.currentTarget.offsetLeft;
   var mainPinOffsetTop = evt.currentTarget.offsetTop;
-  var mainPinXCoordinate = mainPinOffsetLeft + MAIN_PIN_WIDTH / 2;
-  var mainPinYCoordinate = mainPinOffsetTop + MAIN_PIN_HEIGHT + MAIN_PIN_PEAK_HEIGHT;
+  var mainPinXCoordinate = mainPinOffsetLeft + window.consts.MAIN_PIN_WIDTH / 2;
+  var mainPinYCoordinate = mainPinOffsetTop + window.consts.MAIN_PIN_HEIGHT + window.consts.MAIN_PIN_PEAK_HEIGHT;
 
   setAddress(mainPinXCoordinate, mainPinYCoordinate);
 };
