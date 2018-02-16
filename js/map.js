@@ -1,7 +1,5 @@
 'use strict';
 
-var templateElement = document.querySelector('template');
-
 var generatedOffers = window.data.generateOffers(window.consts.OFFER_QUANTITY);
 var mapElement = document.querySelector('.map');
 var offerFormElement = document.querySelector('.notice__form');
@@ -23,23 +21,9 @@ var unsetActiveState = function () {
     offerFormFieldsetElements[i].disabled = true;
   }
   resetAllInvalidHighlighting();
-  removeMapPins();
+  window.removeMapPins();
   window.removeOfferCard();
   mainPinElement.addEventListener('mouseup', addMapPinsHandler);
-};
-
-var removeMapPins = function () {
-  var pinsElements = document.querySelectorAll('.map__pin');
-
-  if (pinsElements.length < 2) {
-    return;
-  }
-
-  pinsElements = Array.prototype.slice.call(pinsElements, 1);
-
-  for (var i = 0; i < pinsElements.length; i++) {
-    pinsElements[i].remove();
-  }
 };
 
 var setAddress = function (xCoordinate, yCoordinate) {
