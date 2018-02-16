@@ -8,14 +8,6 @@ var OFFER_QUANTITY = 8;
 
 var templateElement = document.querySelector('template');
 
-var getRandomInInterval = function (min, max) {
-  return Math.round(Math.random() * (max - min) + min);
-};
-
-var compareWithRandomResult = function () {
-  return Math.random() - 0.5;
-};
-
 var generateOffers = function (numberOfOffers) {
   var offers = [];
 
@@ -52,8 +44,8 @@ var generateOffers = function (numberOfOffers) {
   ];
 
   for (var i = 0; i < numberOfOffers; i++) {
-    var locationX = getRandomInInterval(300, 900);
-    var locationY = getRandomInInterval(150, 500);
+    var locationX = window.util.getRandomInInterval(300, 900);
+    var locationY = window.util.getRandomInInterval(150, 500);
 
     var generatedOffer = {
       author: {
@@ -62,15 +54,15 @@ var generateOffers = function (numberOfOffers) {
       offer: {
         title: titles[i],
         address: locationX + ', ' + locationY,
-        price: getRandomInInterval(1000, 1000000),
-        type: types[getRandomInInterval(0, types.length - 1)],
-        rooms: getRandomInInterval(1, 5),
-        guests: getRandomInInterval(1, 10),
-        checkin: getRandomInInterval(12, 14) + ':00',
-        checkout: getRandomInInterval(12, 14) + ':00',
-        features: features.slice(getRandomInInterval(1, features.length - 1)),
+        price: window.util.getRandomInInterval(1000, 1000000),
+        type: types[window.util.getRandomInInterval(0, types.length - 1)],
+        rooms: window.util.getRandomInInterval(1, 5),
+        guests: window.util.getRandomInInterval(1, 10),
+        checkin: window.util.getRandomInInterval(12, 14) + ':00',
+        checkout: window.util.getRandomInInterval(12, 14) + ':00',
+        features: features.slice(window.util.getRandomInInterval(1, features.length - 1)),
         description: '',
-        photos: photos.sort(compareWithRandomResult),
+        photos: photos.sort(window.util.compareWithRandomResult),
       },
       location: {
         x: locationX,
@@ -139,21 +131,6 @@ var deleteOddFeatures = function (featureItems, featuresList) {
   }
 };
 
-var getRightWorldForm = function (num, one, two, five) {
-  var number = Math.abs(num);
-  var remainderOfDivisionBy100 = number % 100;
-  var remainderOfDivisionBy10 = number % 10;
-  var noun = one;
-
-  if (remainderOfDivisionBy100 > 4 && remainderOfDivisionBy100 < 20 || remainderOfDivisionBy10 === 0 || remainderOfDivisionBy10 >= 5) {
-    noun = five;
-  } else if (remainderOfDivisionBy10 > 1 && remainderOfDivisionBy10 < 5) {
-    noun = two;
-  }
-
-  return noun;
-};
-
 var renderOfferCard = function (offerItem) {
   var mapFiltersContainerElement = document.querySelector('.map__filters-container');
   var offerCardTemplate = templateElement.content.querySelector('.map__card');
@@ -169,8 +146,8 @@ var renderOfferCard = function (offerItem) {
     house: 'Дом',
   };
 
-  var currentRoomsWordForm = getRightWorldForm(offerItem.offer.rooms, 'комната', 'комнаты', 'комнат');
-  var guestsRoomsWordForm = getRightWorldForm(offerItem.offer.guests, 'гостя', 'гостей', 'гостей');
+  var currentRoomsWordForm = window.util.getRightWorldForm(offerItem.offer.rooms, 'комната', 'комнаты', 'комнат');
+  var guestsRoomsWordForm = window.util.getRightWorldForm(offerItem.offer.guests, 'гостя', 'гостей', 'гостей');
 
   offerCard.querySelector('.popup__avatar').src = offerItem.author.avatar;
   offerCard.querySelector('h3').textContent = offerItem.offer.title;
@@ -270,39 +247,17 @@ var resetAllInvalidHighlighting = function () {
   }
 };
 
-var findOptionByValue = function (selectElement, value) {
-  var optionElements = selectElement.querySelectorAll('option');
-  var currentOptionElement = null;
-
-  for (var i = 0; i < optionElements.length; i++) {
-    if (optionElements[i].value === value) {
-      currentOptionElement = optionElements[i];
-    }
-  }
-
-  return currentOptionElement;
-};
-
 var checkDisabledOptions = function () {
   var selectElements = offerFormElement.querySelectorAll('select');
 
   for (var i = 0; i < selectElements.length; i++) {
-    var selectedOptionElement = findOptionByValue(selectElements[i], selectElements[i].value);
+    var selectedOptionElement = window.util.findOptionByValue(selectElements[i], selectElements[i].value);
     resetInvalidHighlightingInput(selectElements[i]);
     selectElements[i].setCustomValidity('');
 
     if (selectedOptionElement.disabled) {
       highlightInvalidInput(selectElements[i]);
       selectElements[i].setCustomValidity('Данный вариант не может быть принят');
-    }
-  }
-};
-
-var setDisabledByValue = function (elements, values) {
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].disabled = false;
-    if (values.indexOf(elements[i].value) > -1) {
-      elements[i].disabled = true;
     }
   }
 };
@@ -314,16 +269,16 @@ var roomsInputHandler = function (evt) {
 
   switch (roomsInputValue) {
     case '1':
-      setDisabledByValue(capacityOptionElements, ['0', '2', '3']);
+      window.util.setDisabledByValuesetDisabledByValue(capacityOptionElements, ['0', '2', '3']);
       break;
     case '2':
-      setDisabledByValue(capacityOptionElements, ['0', '3']);
+      window.util.setDisabledByValuesetDisabledByValue(capacityOptionElements, ['0', '3']);
       break;
     case '3':
-      setDisabledByValue(capacityOptionElements, ['0']);
+      window.util.setDisabledByValuesetDisabledByValue(capacityOptionElements, ['0']);
       break;
     case '100':
-      setDisabledByValue(capacityOptionElements, ['1', '2', '3']);
+      window.util.setDisabledByValuesetDisabledByValue(capacityOptionElements, ['1', '2', '3']);
       break;
   }
 };
