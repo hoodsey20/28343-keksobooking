@@ -20,7 +20,7 @@ window.appState = (function () {
         offerFormFieldsetElements[i].disabled = true;
       }
       window.formUtil.resetAllInvalidHighlighting();
-      window.removeMapPins();
+      window.mapPins.remove();
       window.offerCard.remove();
     },
   };

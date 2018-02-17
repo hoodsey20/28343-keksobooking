@@ -20,7 +20,7 @@
 
   var addMapPinsHandler = function () {
     if (document.querySelectorAll('.map__pin').length < 2) {
-      window.renderMapPins(generatedOffers);
+      window.mapPins.render(generatedOffers);
     }
   };
 
