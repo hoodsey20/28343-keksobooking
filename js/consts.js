@@ -6,6 +6,5 @@ window.consts = (function () {
     MAIN_PIN_HEIGHT: 65,
     MAIN_PIN_PEAK_HEIGHT: 22,
     MAP_PIN_HEIGHT: 70,
-    OFFER_QUANTITY: 8,
   };
 })();

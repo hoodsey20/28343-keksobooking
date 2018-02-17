@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var generatedOffers = window.data.generateOffers(window.consts.OFFER_QUANTITY);
   var mainPinElement = document.querySelector('.map__pin--main');
 
   var setAddress = function (xCoordinate, yCoordinate) {
@@ -20,7 +19,7 @@
 
   var addMapPinsHandler = function () {
     if (document.querySelectorAll('.map__pin').length < 2) {
-      window.mapPins.render(generatedOffers);
+      window.mapPins.render(window.data);
     }
   };
 
