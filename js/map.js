@@ -45,34 +45,8 @@ var addMapPinsHandler = function () {
   mainPinElement.removeEventListener('mouseup', addMapPinsHandler);
 };
 
-var submitBtnElement = offerFormElement.querySelector('.form__submit');
-var resetBtnElement = offerFormElement.querySelector('.form__reset');
-var inputElements = offerFormElement.querySelectorAll('input');
-var roomsInputElement = offerFormElement.querySelector('#room_number');
-var typeInputElement = offerFormElement.querySelector('#type');
-var arrivalInputElement = offerFormElement.querySelector('#timein');
-var departureInputElement = offerFormElement.querySelector('#timeout');
-
-var resetFormHandler = function () {
-  offerFormElement.reset();
-  unsetActiveState();
-};
-
 unsetActiveState();
 
 mainPinElement.addEventListener('mouseup', setActiveStateHandler);
 mainPinElement.addEventListener('mouseup', addMapPinsHandler);
 mainPinElement.addEventListener('mouseup', mainPinMouseupHandler);
-
-submitBtnElement.addEventListener('click', window.formHandlers.submitFormHandler);
-resetBtnElement.addEventListener('click', resetFormHandler);
-departureInputElement.addEventListener('change', window.formHandlers.changeArrivalandDepartureHandler);
-arrivalInputElement.addEventListener('change', window.formHandlers.changeArrivalandDepartureHandler);
-typeInputElement.addEventListener('change', window.formHandlers.typeInputHandler);
-roomsInputElement.addEventListener('change', window.formHandlers.roomsInputHandler);
-
-for (var i = 0; i < inputElements.length; i++) {
-  inputElements[i].addEventListener('invalid', function (evt) {
-    window.formUtil.highlightInvalidInput(evt.target);
-  });
-}
