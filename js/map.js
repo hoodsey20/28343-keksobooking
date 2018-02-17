@@ -1,30 +1,7 @@
 'use strict';
 
 var generatedOffers = window.data.generateOffers(window.consts.OFFER_QUANTITY);
-var mapElement = document.querySelector('.map');
-var offerFormElement = document.querySelector('.notice__form');
-var offerFormFieldsetElements = offerFormElement.querySelectorAll('fieldset');
 var mainPinElement = document.querySelector('.map__pin--main');
-
-var setActiveStateHandler = function () {
-  offerFormElement.classList.remove('notice__form--disabled');
-  mapElement.classList.remove('map--faded');
-  for (var i = 0; i < offerFormFieldsetElements.length; i++) {
-    offerFormFieldsetElements[i].disabled = false;
-  }
-};
-
-var unsetActiveState = function () {
-  offerFormElement.classList.add('notice__form--disabled');
-  mapElement.classList.add('map--faded');
-  for (var i = 0; i < offerFormFieldsetElements.length; i++) {
-    offerFormFieldsetElements[i].disabled = true;
-  }
-  window.formUtil.resetAllInvalidHighlighting();
-  window.removeMapPins();
-  window.removeOfferCard();
-  mainPinElement.addEventListener('mouseup', addMapPinsHandler);
-};
 
 var setAddress = function (xCoordinate, yCoordinate) {
   var adressInputElement = document.querySelector('#address');
@@ -41,12 +18,13 @@ var mainPinMouseupHandler = function (evt) {
 };
 
 var addMapPinsHandler = function () {
-  window.renderMapPins(generatedOffers);
-  mainPinElement.removeEventListener('mouseup', addMapPinsHandler);
+  if (document.querySelectorAll('.map__pin').length < 2) {
+    window.renderMapPins(generatedOffers);
+  }
 };
 
-unsetActiveState();
+window.appState.unsetActive();
 
-mainPinElement.addEventListener('mouseup', setActiveStateHandler);
+mainPinElement.addEventListener('mouseup', window.appState.setActive);
 mainPinElement.addEventListener('mouseup', addMapPinsHandler);
 mainPinElement.addEventListener('mouseup', mainPinMouseupHandler);

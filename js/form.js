@@ -81,7 +81,7 @@
 
   var resetFormHandler = function () {
     offerFormElement.reset();
-    window.unsetActiveState();
+    window.appState.unsetActive();
   };
 
   submitBtnElement.addEventListener('click', submitFormHandler);
