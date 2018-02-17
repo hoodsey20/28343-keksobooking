@@ -12,8 +12,8 @@
     pinImg.src = offer.author.avatar;
 
     pin.addEventListener('click', function () {
-      window.removeOfferCard();
-      window.renderOfferCard(offer);
+      window.offerCard.remove();
+      window.offerCard.render(offer);
     });
 
     return pin;

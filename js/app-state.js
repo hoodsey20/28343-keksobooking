@@ -21,7 +21,7 @@ window.appState = (function () {
       }
       window.formUtil.resetAllInvalidHighlighting();
       window.removeMapPins();
-      window.removeOfferCard();
+      window.offerCard.remove();
     },
   };
 })();
