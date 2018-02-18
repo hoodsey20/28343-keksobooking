@@ -1,6 +1,6 @@
 'use strict';
 
-window.mapPins = (function () {
+(function () {
   var MAP_PIN_HEIGHT = 70;
 
   var createOfferPin = function (offer) {
@@ -21,29 +21,30 @@ window.mapPins = (function () {
     return pin;
   };
 
-  return {
-    remove: function () {
-      var pinsElements = document.querySelectorAll('.map__pin');
+  window.mapPins = {};
 
-      if (pinsElements.length < 2) {
-        return;
-      }
+  window.mapPins.remove = function () {
+    var pinsElements = document.querySelectorAll('.map__pin');
 
-      pinsElements = Array.prototype.slice.call(pinsElements, 1);
+    if (pinsElements.length < 2) {
+      return;
+    }
 
-      for (var i = 0; i < pinsElements.length; i++) {
-        pinsElements[i].remove();
-      }
-    },
-    render: function (offers) {
-      var mapPinsContainerELement = document.querySelector('.map__pins');
-      var mapPinsFragment = document.createDocumentFragment();
+    pinsElements = Array.prototype.slice.call(pinsElements, 1);
 
-      for (var i = 0; i < offers.length; i++) {
-        mapPinsFragment.appendChild(createOfferPin(offers[i]));
-      }
+    for (var i = 0; i < pinsElements.length; i++) {
+      pinsElements[i].remove();
+    }
+  };
 
-      mapPinsContainerELement.appendChild(mapPinsFragment);
-    },
+  window.mapPins.render = function (offers) {
+    var mapPinsContainerELement = document.querySelector('.map__pins');
+    var mapPinsFragment = document.createDocumentFragment();
+
+    for (var i = 0; i < offers.length; i++) {
+      mapPinsFragment.appendChild(createOfferPin(offers[i]));
+    }
+
+    mapPinsContainerELement.appendChild(mapPinsFragment);
   };
 })();
