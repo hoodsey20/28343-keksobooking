@@ -14,7 +14,7 @@
     var selectElements = offerFormElement.querySelectorAll('select');
 
     for (var i = 0; i < selectElements.length; i++) {
-      var selectedOptionElement = window.formUtil.findOptionByValue(selectElements[i], selectElements[i].value);
+      var selectedOptionElement = selectElements[i].selectedOptions[0];
       window.formUtil.resetInvalidHighlightingInput(selectElements[i]);
       selectElements[i].setCustomValidity('');
 

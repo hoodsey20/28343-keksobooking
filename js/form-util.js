@@ -14,18 +14,6 @@ window.formUtil = (function () {
         this.resetInvalidHighlightingInput(invalidInputs[i]);
       }
     },
-    findOptionByValue: function (selectElement, value) {
-      var optionElements = selectElement.querySelectorAll('option');
-      var currentOptionElement = null;
-
-      for (var i = 0; i < optionElements.length; i++) {
-        if (optionElements[i].value === value) {
-          currentOptionElement = optionElements[i];
-        }
-      }
-
-      return currentOptionElement;
-    },
     setDisabledByValue: function (elements, values) {
       for (var i = 0; i < elements.length; i++) {
         elements[i].disabled = false;
