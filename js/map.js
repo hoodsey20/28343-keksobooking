@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var MAIN_PIN_WIDTH = 65;
+  var MAIN_PIN_PEAK_HEIGHT = 22;
+  var MAIN_PIN_HEIGHT = 65;
   var mainPinElement = document.querySelector('.map__pin--main');
 
   var setAddress = function (xCoordinate, yCoordinate) {
@@ -11,8 +14,8 @@
   var mainPinMouseupHandler = function (evt) {
     var mainPinOffsetLeft = evt.currentTarget.offsetLeft;
     var mainPinOffsetTop = evt.currentTarget.offsetTop;
-    var mainPinXCoordinate = mainPinOffsetLeft + window.consts.MAIN_PIN_WIDTH / 2;
-    var mainPinYCoordinate = mainPinOffsetTop + window.consts.MAIN_PIN_HEIGHT + window.consts.MAIN_PIN_PEAK_HEIGHT;
+    var mainPinXCoordinate = mainPinOffsetLeft + MAIN_PIN_WIDTH / 2;
+    var mainPinYCoordinate = mainPinOffsetTop + MAIN_PIN_HEIGHT + MAIN_PIN_PEAK_HEIGHT;
 
     setAddress(mainPinXCoordinate, mainPinYCoordinate);
   };

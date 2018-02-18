@@ -1,6 +1,8 @@
 'use strict';
 
 window.mapPins = (function () {
+  var MAP_PIN_HEIGHT = 70;
+
   var createOfferPin = function (offer) {
     var templateElement = document.querySelector('template');
     var mapPinTemplate = templateElement.content.querySelector('.map__pin');
@@ -8,7 +10,7 @@ window.mapPins = (function () {
     var pinImg = pin.querySelector('img');
 
     pin.style.left = offer.location.x + 'px';
-    pin.style.top = offer.location.y - window.consts.MAP_PIN_HEIGHT / 2 + 'px';
+    pin.style.top = offer.location.y - MAP_PIN_HEIGHT / 2 + 'px';
     pinImg.src = offer.author.avatar;
 
     pin.addEventListener('click', function () {
