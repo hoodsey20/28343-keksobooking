@@ -26,4 +26,9 @@
       }
     }
   };
+
+  window.formUtil.setAdress = function (x, y) {
+    var adressInputElement = document.querySelector('#address');
+    adressInputElement.value = Math.round(x) + ', ' + Math.round(y);
+  };
 })();
