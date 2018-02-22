@@ -1,11 +1,9 @@
 'use strict';
 
 (function () {
-  var MAIN_PIN_WIDTH = 65;
   var MAIN_PIN_HEIGHT = 65;
   var MAIN_PIN_PEAK_HEIGHT = 16;
   var PIN_PEAK_Y_CORRECTION = Math.round(MAIN_PIN_HEIGHT / 2 + MAIN_PIN_PEAK_HEIGHT);
-  var PIN_PEAK_X_CORRECTION = Math.round(MAIN_PIN_WIDTH / 2);
   var MAIN_PIN_Y_LIMITS = {
     min: 150,
     max: 500,
@@ -14,14 +12,14 @@
   var cityMap = document.querySelector('.map');
   var mapWidth = cityMap.offsetWidth;
 
-
   var mainPinElement = document.querySelector('.map__pin--main');
   var initialCoords = {
     x: mainPinElement.offsetLeft,
     y: mainPinElement.offsetTop,
   };
 
-  var pinCoordinates = {};
+  var pinCoordinates = Object.create(initialCoords);
+
   var formBtnElement = document.querySelector('.notice__form');
 
   var addMapPinsHandler = function (evt) {
@@ -41,20 +39,20 @@
 
   var mainPinShifting = function (evt) {
     evt.preventDefault();
-    setMainPinPosition(evt.pageX, evt.pageY);
+    var x = evt.pageX - cityMap.offsetLeft;
+    var y = evt.pageY - cityMap.offsetTop;
+    setMainPinPosition(x, y);
   };
 
   var setMainPinPosition = function (x, y) {
-    var mapLeftOffset = cityMap.offsetLeft;
-    var pinPeakY = y + PIN_PEAK_Y_CORRECTION;
-    var pinPeakX = x - PIN_PEAK_X_CORRECTION - mapLeftOffset;
+    var pinYPeak = y + PIN_PEAK_Y_CORRECTION;
 
-    if (pinPeakY >= MAIN_PIN_Y_LIMITS.min && pinPeakY <= MAIN_PIN_Y_LIMITS.max) {
+    if (pinYPeak >= MAIN_PIN_Y_LIMITS.min && pinYPeak <= MAIN_PIN_Y_LIMITS.max) {
       pinCoordinates.y = y;
     }
 
-    if (pinPeakX >= 0 && pinPeakX <= mapWidth - MAIN_PIN_WIDTH) {
-      pinCoordinates.x = x - mapLeftOffset;
+    if (x >= 0 && x <= mapWidth) {
+      pinCoordinates.x = x;
     }
 
     mainPinElement.style.top = pinCoordinates.y + 'px';
