@@ -13,9 +13,7 @@
 
   var cityMap = document.querySelector('.map');
   var mapWidth = cityMap.offsetWidth;
-  var mapLeftOffset = cityMap.offsetLeft;
-  var minXposition = mapLeftOffset;
-  var maxXposition = mapLeftOffset + mapWidth - MAIN_PIN_WIDTH;
+
 
   var mainPinElement = document.querySelector('.map__pin--main');
   var initialCoords = {
@@ -47,19 +45,20 @@
   };
 
   var setMainPinPosition = function (x, y) {
+    var mapLeftOffset = cityMap.offsetLeft;
     var pinPeakY = y + PIN_PEAK_Y_CORRECTION;
-    var pinPeakX = x - PIN_PEAK_X_CORRECTION;
+    var pinPeakX = x - PIN_PEAK_X_CORRECTION - mapLeftOffset;
 
     if (pinPeakY >= MAIN_PIN_Y_LIMITS.min && pinPeakY <= MAIN_PIN_Y_LIMITS.max) {
       pinCoordinates.y = y;
     }
 
-    if (pinPeakX >= minXposition && pinPeakX <= maxXposition) {
-      pinCoordinates.x = x;
+    if (pinPeakX >= 0 && pinPeakX <= mapWidth - MAIN_PIN_WIDTH) {
+      pinCoordinates.x = x - mapLeftOffset;
     }
 
     mainPinElement.style.top = pinCoordinates.y + 'px';
-    mainPinElement.style.left = pinCoordinates.x - PIN_PEAK_X_CORRECTION + 'px';
+    mainPinElement.style.left = pinCoordinates.x + 'px';
 
     window.formUtil.setAdress(pinCoordinates.x, pinCoordinates.y + PIN_PEAK_Y_CORRECTION);
   };
