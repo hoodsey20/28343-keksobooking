@@ -41,10 +41,6 @@
     evt.preventDefault();
     var x = evt.pageX - cityMap.offsetLeft;
     var y = evt.pageY - cityMap.offsetTop;
-    setMainPinPosition(x, y);
-  };
-
-  var setMainPinPosition = function (x, y) {
     var pinYPeak = y + PIN_PEAK_Y_CORRECTION;
 
     if (pinYPeak >= MAIN_PIN_Y_LIMITS.min && pinYPeak <= MAIN_PIN_Y_LIMITS.max) {
@@ -60,6 +56,7 @@
 
     window.formUtil.setAdress(pinCoordinates.x, pinCoordinates.y + PIN_PEAK_Y_CORRECTION);
   };
+
 
   var mouseMoveHandler = function (evt) {
     evt.preventDefault();
