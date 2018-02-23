@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/form-styles.css">
+  <link rel="stylesheet" href="css/error-panel.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Кексобукинг</title>
 </head>
@@ -12,6 +13,13 @@
 <header class="header">
   <h1 class="visuallyhidden">Keksobooking. Кексы по соседству</h1>
 </header>
+
+<div class="error-panel">
+  <div class="error-panel__wrap">
+    <button class="error-panel__close-btn">&times</button>
+    <div class="error-panel__text"></div>
+  </div>
+</div>
 
 <main>
   <section class="map map--faded">
@@ -247,6 +255,7 @@
 </template>
 
 <script src="js/util.js"></script>
+<script src="js/error-handler.js"></script>
 <script src="js/data.js"></script>
 <script src="js/backend.js"></script>
 <script src="js/offer-card.js"></script>
