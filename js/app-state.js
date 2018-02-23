@@ -4,6 +4,7 @@
   var mapElement = document.querySelector('.map');
   var offerFormElement = document.querySelector('.notice__form');
   var offerFormFieldsetElements = offerFormElement.querySelectorAll('fieldset');
+
   window.appState = {};
 
   window.appState.setActive = function () {

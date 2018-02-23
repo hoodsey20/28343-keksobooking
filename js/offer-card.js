@@ -22,6 +22,13 @@
     }
   };
 
+  var removeOfferCard = function () {
+    var offerCardElement = document.querySelector('.map__card');
+    if (offerCardElement) {
+      offerCardElement.remove();
+    }
+  };
+
   window.offerCard = {};
 
   window.offerCard.remove = function () {
@@ -62,7 +69,7 @@
 
     deleteOddFeatures(featureElements, offerItem.offer.features);
     renderOfferPictures(picturesContainerElement, offerItem.offer.photos);
-    closeElement.addEventListener('click', this.removeOfferCard);
+    closeElement.addEventListener('click', removeOfferCard);
     mapFiltersContainerElement.parentNode.insertBefore(offerCard, mapFiltersContainerElement);
   };
 })();
