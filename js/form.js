@@ -12,6 +12,7 @@
 
   var checkDisabledOptions = function () {
     var selectElements = offerFormElement.querySelectorAll('select');
+    var isValid = true;
 
     for (var i = 0; i < selectElements.length; i++) {
       var selectedOptionElement = selectElements[i].selectedOptions[0];
@@ -19,17 +20,27 @@
       selectElements[i].setCustomValidity('');
 
       if (selectedOptionElement.disabled) {
+        isValid = false;
         window.formUtil.highlightInvalidInput(selectElements[i]);
         selectElements[i].setCustomValidity('Данный вариант не может быть принят');
       }
     }
+
+    return isValid;
   };
 
-  var submitFormHandler = function () {
+  var submitFormHandler = function (evt) {
     for (var i = 0; i < inputElements.length; i++) {
       window.formUtil.resetInvalidHighlightingInput(inputElements[i]);
     }
-    checkDisabledOptions();
+    var isInputsValid = offerFormElement.checkValidity();
+    var isOptionsValid = checkDisabledOptions();
+
+    if (isInputsValid && isOptionsValid) {
+      evt.preventDefault();
+      var formData = new FormData(offerFormElement);
+      window.backend.send(formData, resetFormHandler, window.errorHandler);
+    }
   };
 
   var changeArrivalandDepartureHandler = function (evt) {

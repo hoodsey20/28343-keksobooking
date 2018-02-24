@@ -1,0 +1,36 @@
+.error-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background-color: #f25252;
+  transition: .6s ease;
+  transform: translate(0, -150%);
+}
+
+.error-panel_active {
+  transform: translate(0, 0);
+}
+
+.error-panel__wrap {
+  position: relative;;
+  margin: 0 120px;
+}
+
+.error-panel__close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  font-size: 20px;
+  background-color: transparent;
+  color: #fff;
+}
+
+.error-panel__text {
+  font-size: 16px;
+  color: #fff;
+}

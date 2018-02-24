@@ -25,7 +25,7 @@
   var addMapPinsHandler = function (evt) {
     evt.preventDefault();
     if (document.querySelectorAll('.map__pin').length < 2) {
-      window.mapPins.render(window.data);
+      window.backend.load(window.mapPins.render, window.errorHandler);
     }
     document.removeEventListener('mouseup', addMapPinsHandler);
   };
