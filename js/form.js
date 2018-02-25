@@ -39,7 +39,7 @@
     if (isInputsValid && isOptionsValid) {
       evt.preventDefault();
       var formData = new FormData(offerFormElement);
-      window.backend.send(formData, resetFormHandler, window.errorHandler);
+      window.backend.sendFormData(formData, resetFormHandler, window.errorHandler);
     }
   };
 
