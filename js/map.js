@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var ESC_KEYCODE = 27;
   var MAIN_PIN_HEIGHT = 65;
   var MAIN_PIN_PEAK_HEIGHT = 16;
   var PIN_PEAK_Y_CORRECTION = Math.round(MAIN_PIN_HEIGHT / 2 + MAIN_PIN_PEAK_HEIGHT);
@@ -8,6 +9,8 @@
     min: 150,
     max: 500,
   };
+
+  var formElement = document.querySelector('.notice__form');
 
   var cityMap = document.querySelector('.map');
   var mapWidth = cityMap.offsetWidth;
@@ -77,6 +80,12 @@
     }, 0);
   };
 
+  var documentEscHandler = function (evt) {
+    if (evt.keyCode === ESC_KEYCODE && !formElement.contains(evt.target)) {
+      window.offerCard.remove();
+    }
+  };
+
   window.appState.unsetActive();
   window.formUtil.setAdress(initialCoords.x, initialCoords.y + PIN_PEAK_Y_CORRECTION);
 
@@ -84,4 +93,5 @@
   mainPinElement.addEventListener('mousedown', mouseDownHandler);
   mainPinElement.addEventListener('mouseup', mainPinShifting);
   formBtnElement.addEventListener('reset', setInitialMapPinState);
+  document.addEventListener('keydown', documentEscHandler);
 })();
