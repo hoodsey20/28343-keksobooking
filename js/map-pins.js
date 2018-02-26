@@ -39,9 +39,6 @@
   };
 
   window.mapPins.render = function (offers) {
-    if (!window.offers) {
-      window.offers = offers;
-    }
     var offersToRender = offers.slice(0, PIN_ELEMENTS_QUANTITY);
     var mapPinsContainerELement = document.querySelector('.map__pins');
     var mapPinsFragment = document.createDocumentFragment();

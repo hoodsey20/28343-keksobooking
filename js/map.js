@@ -25,11 +25,16 @@
 
   var formBtnElement = document.querySelector('.notice__form');
 
+  var initialRender = function (offers) {
+    window.offers = offers;
+    window.mapPins.render(offers);
+  };
+
   var addMapPinsHandler = function (evt) {
     evt.preventDefault();
     if (document.querySelectorAll('.map__pin').length < 2) {
       window.errorHandler.delete();
-      window.backend.getOffersData(window.mapPins.render, window.errorHandler.show);
+      window.backend.getOffersData(initialRender, window.errorHandler.show);
     }
     document.removeEventListener('mouseup', addMapPinsHandler);
   };
