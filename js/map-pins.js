@@ -2,6 +2,7 @@
 
 (function () {
   var MAP_PIN_HEIGHT = 70;
+  var PIN_ELEMENTS_QUANTITY = 5;
 
   var createOfferPin = function (offer) {
     var templateElement = document.querySelector('template');
@@ -38,11 +39,15 @@
   };
 
   window.mapPins.render = function (offers) {
+    if (!window.offers) {
+      window.offers = offers;
+    }
+    var offersToRender = offers.slice(0, PIN_ELEMENTS_QUANTITY);
     var mapPinsContainerELement = document.querySelector('.map__pins');
     var mapPinsFragment = document.createDocumentFragment();
 
-    for (var i = 0; i < offers.length; i++) {
-      mapPinsFragment.appendChild(createOfferPin(offers[i]));
+    for (var i = 0; i < offersToRender.length; i++) {
+      mapPinsFragment.appendChild(createOfferPin(offersToRender[i]));
     }
 
     mapPinsContainerELement.appendChild(mapPinsFragment);
