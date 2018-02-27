@@ -23,7 +23,7 @@
       if (filters['housing-price'] === 'low') {
         return Number(item.offer.price) < PRICE_LOWER_LIMIT;
       } else if (filters['housing-price'] === 'middle') {
-        return Number(item.offer.price) <= PRICE_UPPER_LIMIT;
+        return Number(item.offer.price) >= PRICE_LOWER_LIMIT && Number(item.offer.price) <= PRICE_UPPER_LIMIT;
       } else if (filters['housing-price'] === 'high') {
         return Number(item.offer.price) > PRICE_UPPER_LIMIT;
       } else {
