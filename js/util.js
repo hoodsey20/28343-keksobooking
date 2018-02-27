@@ -25,4 +25,13 @@
 
     return noun;
   };
+
+  window.util.getArraysDifference = function (arr1, arr2) {
+    var differences = arr2.filter(function (item) {
+      return arr1.indexOf(item) < 0;
+    });
+
+    return differences;
+  };
+
 })();

@@ -1,20 +1,74 @@
 'use strict';
 
 (function () {
+  var PRICE_LOWER_LIMIT = 10000;
+  var PRICE_UPPER_LIMIT = 50000;
+
+  var filters = {
+    'features': [],
+  };
   var filterFormElements = document.querySelector('.map__filters').elements;
+
+  var filterOffers = function () {
+    var currentOffers = window.offers.slice(0);
+
+    var filteredOffers = currentOffers.filter(function (item) {
+      if (filters['housing-type']) {
+        return item.offer.type === filters['housing-type'];
+      } else {
+        return true;
+      }
+    }).filter(function (item) {
+      if (filters['housing-price'] === 'low') {
+        return Number(item.offer.price) < PRICE_LOWER_LIMIT;
+      } else if (filters['housing-price'] === 'middle') {
+        return Number(item.offer.price) <= PRICE_UPPER_LIMIT;
+      } else if (filters['housing-price'] === 'high') {
+        return Number(item.offer.price) > PRICE_UPPER_LIMIT;
+      } else {
+        return true;
+      }
+    }).filter(function (item) {
+      if (filters['housing-rooms']) {
+        return Number(item.offer.rooms) === Number(filters['housing-rooms']);
+      } else {
+        return true;
+      }
+    }).filter(function (item) {
+      if (filters['housing-guests']) {
+        return Number(item.offer.guests) === Number(filters['housing-guests']);
+      } else {
+        return true;
+      }
+    }).filter(function (item) {
+      if (filters.features.length) {
+        return window.util.getArraysDifference(item.offer.features, filters.features).length === 0;
+      } else {
+        return true;
+      }
+    });
+
+    return filteredOffers;
+  };
 
   var checkboxChangeHandler = function (evt) {
     if (evt.target.checked) {
-      window.filters.features.push(evt.target.value);
+      filters.features.push(evt.target.value);
     } else {
-      window.filters.features = window.filters.features.filter(function (item) {
+      filters.features = filters.features.filter(function (item) {
         return item !== evt.target.value;
       });
     }
+    filterOffers();
   };
 
   var selectChangeHandler = function (evt) {
-    window.filters[evt.target.name] = evt.target.value;
+    if (evt.target.value === 'any') {
+      delete filters[evt.target.name];
+    } else {
+      filters[evt.target.name] = evt.target.value;
+    }
+    filterOffers();
   };
 
   for (var i = 0; i < filterFormElements.length; i++) {
@@ -25,8 +79,7 @@
     }
   }
 
-  window.filters = {
-    'features': [],
-  };
+
+
 
 })();
