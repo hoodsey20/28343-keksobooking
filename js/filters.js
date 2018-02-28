@@ -44,9 +44,12 @@
         return false;
       }
 
-      if (filters.features.length &&
-        window.util.getArraysDifference(item.offer.features, filters.features).length > 0) {
-        return false;
+      if (filters.features.length) {
+        for (var i = 0; i < filters.features.length; i++) {
+          if (item.offer.features.indexOf(filters.features[i]) < 0) {
+            return false;
+          }
+        }
       }
 
       return true;
