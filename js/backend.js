@@ -6,7 +6,7 @@
 
   window.backend = {};
 
-  window.backend.getOffersData = function (successHandler, errorHandler) {
+  window.backend.load = function (successHandler, errorHandler) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -30,7 +30,7 @@
     xhr.send();
   };
 
-  window.backend.sendFormData = function (data, successHandler, errorHandler) {
+  window.backend.send = function (data, successHandler, errorHandler) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 

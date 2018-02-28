@@ -34,7 +34,7 @@
     evt.preventDefault();
     if (document.querySelectorAll('.map__pin').length < 2) {
       window.errorHandler.delete();
-      window.backend.getOffersData(initialRender, window.errorHandler.show);
+      window.backend.load(initialRender, window.errorHandler.show);
     }
     document.removeEventListener('mouseup', addMapPinsHandler);
   };

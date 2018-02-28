@@ -40,7 +40,7 @@
       evt.preventDefault();
       var formData = new FormData(offerFormElement);
       window.errorHandler.delete();
-      window.backend.sendFormData(formData, resetFormHandler, window.errorHandler.show);
+      window.backend.send(formData, resetFormHandler, window.errorHandler.show);
     }
   };
 
