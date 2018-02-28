@@ -14,39 +14,42 @@
     var currentOffers = window.offers.slice(0);
 
     var filteredOffers = currentOffers.filter(function (item) {
-      if (filters['housing-type']) {
-        return item.offer.type === filters['housing-type'];
-      } else {
-        return true;
+      if (filters['housing-type']
+        && item.offer.type !== filters['housing-type']) {
+        return false;
       }
-    }).filter(function (item) {
-      if (filters['housing-price'] === 'low') {
-        return Number(item.offer.price) < PRICE_LOWER_LIMIT;
-      } else if (filters['housing-price'] === 'middle') {
-        return Number(item.offer.price) >= PRICE_LOWER_LIMIT && Number(item.offer.price) <= PRICE_UPPER_LIMIT;
-      } else if (filters['housing-price'] === 'high') {
-        return Number(item.offer.price) > PRICE_UPPER_LIMIT;
-      } else {
-        return true;
+
+      if (filters['housing-price'] === 'low' &&
+        Number(item.offer.price) >= PRICE_LOWER_LIMIT) {
+        return false;
       }
-    }).filter(function (item) {
-      if (filters['housing-rooms']) {
-        return Number(item.offer.rooms) === Number(filters['housing-rooms']);
-      } else {
-        return true;
+
+      if (filters['housing-price'] === 'middle' &&
+        (Number(item.offer.price) < PRICE_LOWER_LIMIT || Number(item.offer.price) >= PRICE_UPPER_LIMIT)) {
+        return false;
       }
-    }).filter(function (item) {
-      if (filters['housing-guests']) {
-        return Number(item.offer.guests) === Number(filters['housing-guests']);
-      } else {
-        return true;
+
+      if (filters['housing-price'] === 'high' &&
+        Number(item.offer.price) < PRICE_UPPER_LIMIT) {
+        return false;
       }
-    }).filter(function (item) {
-      if (filters.features.length) {
-        return window.util.getArraysDifference(item.offer.features, filters.features).length === 0;
-      } else {
-        return true;
+
+      if (filters['housing-rooms']
+        && Number(item.offer.rooms) !== Number(filters['housing-rooms'])) {
+        return false;
       }
+
+      if (filters['housing-guests'] &&
+        Number(item.offer.guests) !== Number(filters['housing-guests'])) {
+        return false;
+      }
+
+      if (filters.features.length &&
+        window.util.getArraysDifference(item.offer.features, filters.features).length > 0) {
+        return false;
+      }
+
+      return true;
     });
 
     return filteredOffers;
