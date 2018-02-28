@@ -44,7 +44,7 @@
     }
   };
 
-  var changeArrivalandDepartureHandler = function (evt) {
+  var arrivalandDepartureSelectHandler = function (evt) {
     if (evt.target === arrivalInputElement) {
       departureInputElement.value = evt.target.value;
     } else {
@@ -98,8 +98,8 @@
 
   submitBtnElement.addEventListener('click', submitFormHandler);
   resetBtnElement.addEventListener('click', resetFormHandler);
-  departureInputElement.addEventListener('change', changeArrivalandDepartureHandler);
-  arrivalInputElement.addEventListener('change', changeArrivalandDepartureHandler);
+  departureInputElement.addEventListener('change', arrivalandDepartureSelectHandler);
+  arrivalInputElement.addEventListener('change', arrivalandDepartureSelectHandler);
   typeInputElement.addEventListener('change', typeInputHandler);
   roomsInputElement.addEventListener('change', roomsInputHandler);
 

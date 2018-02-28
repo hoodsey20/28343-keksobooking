@@ -5,27 +5,26 @@
   var MAIN_PIN_HEIGHT = 65;
   var MAIN_PIN_PEAK_HEIGHT = 16;
   var PIN_PEAK_Y_CORRECTION = Math.round(MAIN_PIN_HEIGHT / 2 + MAIN_PIN_PEAK_HEIGHT);
+
   var MAIN_PIN_Y_LIMITS = {
     min: 150,
     max: 500,
   };
 
   var formElement = document.querySelector('.notice__form');
-
   var cityMap = document.querySelector('.map');
   var mapWidth = cityMap.offsetWidth;
-
   var mainPinElement = document.querySelector('.map__pin--main');
+
   var initialCoords = {
     x: mainPinElement.offsetLeft,
     y: mainPinElement.offsetTop,
   };
 
   var pinCoordinates = Object.create(initialCoords);
-
   var formBtnElement = document.querySelector('.notice__form');
 
-  var initialRender = function (offers) {
+  var renderInitially = function (offers) {
     window.offers = offers;
     window.mapPins.render(offers);
   };
@@ -34,7 +33,7 @@
     evt.preventDefault();
     if (document.querySelectorAll('.map__pin').length < 2) {
       window.errorHandler.delete();
-      window.backend.load(initialRender, window.errorHandler.show);
+      window.backend.load(renderInitially, window.errorHandler.show);
     }
     document.removeEventListener('mouseup', addMapPinsHandler);
   };
@@ -46,7 +45,7 @@
     document.addEventListener('mouseup', addMapPinsHandler);
   };
 
-  var mainPinShifting = function (evt) {
+  var mouseMoveHandler = function (evt) {
     evt.preventDefault();
     var x = evt.pageX - cityMap.offsetLeft;
     var y = evt.pageY - cityMap.offsetTop;
@@ -66,12 +65,6 @@
     window.formUtil.setAdress(pinCoordinates.x, pinCoordinates.y + PIN_PEAK_Y_CORRECTION);
   };
 
-
-  var mouseMoveHandler = function (evt) {
-    evt.preventDefault();
-    mainPinShifting(evt);
-  };
-
   var mouseUpHandler = function (evt) {
     evt.preventDefault();
     document.removeEventListener('mousemove', mouseMoveHandler);
@@ -86,7 +79,7 @@
     }, 0);
   };
 
-  var documentEscHandler = function (evt) {
+  var escPressHandler = function (evt) {
     if (evt.keyCode === ESC_KEYCODE && !formElement.contains(evt.target)) {
       window.offerCard.remove();
     }
@@ -97,7 +90,7 @@
 
   mainPinElement.addEventListener('mousedown', window.appState.setActive);
   mainPinElement.addEventListener('mousedown', mouseDownHandler);
-  mainPinElement.addEventListener('mouseup', mainPinShifting);
+  mainPinElement.addEventListener('mouseup', mouseMoveHandler);
   formBtnElement.addEventListener('reset', setInitialMapPinState);
-  document.addEventListener('keydown', documentEscHandler);
+  document.addEventListener('keydown', escPressHandler);
 })();

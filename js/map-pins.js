@@ -7,19 +7,19 @@
   var createOfferPin = function (offer) {
     var templateElement = document.querySelector('template');
     var mapPinTemplate = templateElement.content.querySelector('.map__pin');
-    var pin = mapPinTemplate.cloneNode(true);
-    var pinImg = pin.querySelector('img');
+    var pinElemet = mapPinTemplate.cloneNode(true);
+    var pinImg = pinElemet.querySelector('img');
 
-    pin.style.left = offer.location.x + 'px';
-    pin.style.top = offer.location.y - MAP_PIN_HEIGHT / 2 + 'px';
+    pinElemet.style.left = offer.location.x + 'px';
+    pinElemet.style.top = offer.location.y - MAP_PIN_HEIGHT / 2 + 'px';
     pinImg.src = offer.author.avatar;
 
-    pin.addEventListener('click', function () {
+    pinElemet.addEventListener('click', function () {
       window.offerCard.remove();
       window.offerCard.render(offer);
     });
 
-    return pin;
+    return pinElemet;
   };
 
   window.mapPins = {};
