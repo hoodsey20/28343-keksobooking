@@ -29,20 +29,11 @@
     window.mapPins.render(offers);
   };
 
-  var addMapPinsHandler = function (evt) {
-    evt.preventDefault();
-    if (document.querySelectorAll('.map__pin').length < 2) {
-      window.errorHandler.delete();
-      window.backend.load(renderInitially, window.errorHandler.show);
-    }
-    document.removeEventListener('mouseup', addMapPinsHandler);
-  };
 
   var mouseDownHandler = function (evt) {
     evt.preventDefault();
     document.addEventListener('mousemove', mouseMoveHandler);
     document.addEventListener('mouseup', mouseUpHandler);
-    document.addEventListener('mouseup', addMapPinsHandler);
   };
 
   var mouseMoveHandler = function (evt) {
@@ -67,6 +58,10 @@
 
   var mouseUpHandler = function (evt) {
     evt.preventDefault();
+    if (document.querySelectorAll('.map__pin').length < 2) {
+      window.errorHandler.delete();
+      window.backend.load(renderInitially, window.errorHandler.show);
+    }
     document.removeEventListener('mousemove', mouseMoveHandler);
     document.removeEventListener('mouseup', mouseUpHandler);
   };
