@@ -39,12 +39,11 @@
   };
 
   window.mapPins.render = function (offers) {
-    var offersToRender = offers.slice(0, PIN_ELEMENTS_QUANTITY);
     var mapPinsContainerELement = document.querySelector('.map__pins');
     var mapPinsFragment = document.createDocumentFragment();
 
-    for (var i = 0; i < offersToRender.length; i++) {
-      mapPinsFragment.appendChild(createOfferPin(offersToRender[i]));
+    for (var i = 0; i < Math.min(offers.length, PIN_ELEMENTS_QUANTITY); i++) {
+      mapPinsFragment.appendChild(createOfferPin(offers[i]));
     }
 
     mapPinsContainerELement.appendChild(mapPinsFragment);
