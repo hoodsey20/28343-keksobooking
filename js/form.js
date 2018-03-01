@@ -29,7 +29,7 @@
     return isValid;
   };
 
-  var submitFormHandler = function (evt) {
+  var formSubmitHandler = function (evt) {
     for (var i = 0; i < inputElements.length; i++) {
       window.formUtil.resetInvalidHighlightingInput(inputElements[i]);
     }
@@ -39,11 +39,12 @@
     if (isInputsValid && isOptionsValid) {
       evt.preventDefault();
       var formData = new FormData(offerFormElement);
-      window.backend.send(formData, resetFormHandler, window.errorHandler);
+      window.errorHandler.delete();
+      window.backend.send(formData, formResetHandler, window.errorHandler.show);
     }
   };
 
-  var changeArrivalandDepartureHandler = function (evt) {
+  var checkSelectsChangeHandler = function (evt) {
     if (evt.target === arrivalInputElement) {
       departureInputElement.value = evt.target.value;
     } else {
@@ -51,7 +52,7 @@
     }
   };
 
-  var typeInputHandler = function (evt) {
+  var typeInputChangeHandler = function (evt) {
     var priceInputElement = offerFormElement.querySelector('#price');
 
     switch (evt.target.value) {
@@ -70,7 +71,7 @@
     }
   };
 
-  var roomsInputHandler = function (evt) {
+  var roomsInputChangeHandler = function (evt) {
     var capacityInputElement = offerFormElement.querySelector('#capacity');
     var capacityOptionElements = capacityInputElement.querySelectorAll('option');
 
@@ -90,17 +91,17 @@
     }
   };
 
-  var resetFormHandler = function () {
+  var formResetHandler = function () {
     offerFormElement.reset();
     window.appState.unsetActive();
   };
 
-  submitBtnElement.addEventListener('click', submitFormHandler);
-  resetBtnElement.addEventListener('click', resetFormHandler);
-  departureInputElement.addEventListener('change', changeArrivalandDepartureHandler);
-  arrivalInputElement.addEventListener('change', changeArrivalandDepartureHandler);
-  typeInputElement.addEventListener('change', typeInputHandler);
-  roomsInputElement.addEventListener('change', roomsInputHandler);
+  submitBtnElement.addEventListener('click', formSubmitHandler);
+  resetBtnElement.addEventListener('click', formResetHandler);
+  departureInputElement.addEventListener('change', checkSelectsChangeHandler);
+  arrivalInputElement.addEventListener('change', checkSelectsChangeHandler);
+  typeInputElement.addEventListener('change', typeInputChangeHandler);
+  roomsInputElement.addEventListener('change', roomsInputChangeHandler);
 
   for (var i = 0; i < inputElements.length; i++) {
     inputElements[i].addEventListener('invalid', function (evt) {
