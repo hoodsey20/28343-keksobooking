@@ -8,7 +8,7 @@
       if (timer) {
         clearTimeout(timer);
       }
-      timer = window.setTimeout(fun, interval);
+      timer = setTimeout(fun, interval);
     };
   };
 })();
