@@ -45,16 +45,14 @@
       }
 
       if (filters.features.length) {
-        for (var i = 0; i < filters.features.length; i++) {
-          if (item.offer.features.indexOf(filters.features[i]) < 0) {
-            return false;
-          }
-        }
+        var isOfferFitToFilters = function (element) {
+          return item.offer.features.indexOf(element) > -1;
+        };
+        return filters.features.every(isOfferFitToFilters);
       }
 
       return true;
     });
-
     return filteredOffers;
   };
 
