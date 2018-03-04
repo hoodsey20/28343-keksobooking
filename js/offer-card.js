@@ -1,6 +1,12 @@
 'use strict';
 
 (function () {
+  var OFFER_TYPES = {
+    flat: 'Квартира',
+    bungalo: 'Бунгало',
+    house: 'Дом',
+  };
+
   var renderOfferPictures = function (picturesContainer, pictures) {
     var picturesFragment = document.createDocumentFragment();
     var pictureItemElement = picturesContainer.querySelector('li');
@@ -47,20 +53,13 @@
     var featureElements = offerCard.querySelectorAll('.feature');
     var picturesContainerElement = offerCard.querySelector('.popup__pictures');
     var closeElement = offerCard.querySelector('.popup__close');
-
-    var offerType = {
-      flat: 'Квартира',
-      bungalo: 'Бунгало',
-      house: 'Дом',
-    };
-
     var currentRoomsWordForm = window.util.getRightWorldForm(offerItem.offer.rooms, 'комната', 'комнаты', 'комнат');
     var guestsRoomsWordForm = window.util.getRightWorldForm(offerItem.offer.guests, 'гостя', 'гостей', 'гостей');
 
     offerCard.querySelector('.popup__avatar').src = offerItem.author.avatar;
     offerCard.querySelector('h3').textContent = offerItem.offer.title;
     offerCard.querySelector('.popup__price').textContent = offerItem.offer.price + '₽/ночь';
-    offerCard.querySelector('h4').textContent = offerType[offerItem.offer.type];
+    offerCard.querySelector('h4').textContent = OFFER_TYPES[offerItem.offer.type];
 
     paragraphElements[0].textContent = offerItem.offer.address;
     paragraphElements[2].textContent = offerItem.offer.rooms + ' ' + currentRoomsWordForm + ' для ' + offerItem.offer.guests + ' ' + guestsRoomsWordForm;
