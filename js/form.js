@@ -1,6 +1,13 @@
 'use strict';
 
 (function () {
+  var MIN_PRICES = {
+    'flat': 1000,
+    'bungalo': 0,
+    'house': 5000,
+    'palace': 10000,
+  };
+
   var offerFormElement = document.querySelector('.notice__form');
   var inputElements = offerFormElement.querySelectorAll('input');
   var arrivalInputElement = offerFormElement.querySelector('#timein');
@@ -57,16 +64,16 @@
 
     switch (evt.target.value) {
       case 'flat':
-        priceInputElement.min = 1000;
+        priceInputElement.min = MIN_PRICES['flat'];
         break;
       case 'bungalo':
-        priceInputElement.min = 0;
+        priceInputElement.min = MIN_PRICES['bungalo'];
         break;
       case 'house':
-        priceInputElement.min = 5000;
+        priceInputElement.min = MIN_PRICES['house'];
         break;
       case 'palace':
-        priceInputElement.min = 10000;
+        priceInputElement.min = MIN_PRICES['palace'];
         break;
     }
   };
