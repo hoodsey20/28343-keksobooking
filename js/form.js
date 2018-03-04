@@ -16,6 +16,8 @@
   var resetBtnElement = offerFormElement.querySelector('.form__reset');
   var roomsInputElement = offerFormElement.querySelector('#room_number');
   var typeInputElement = offerFormElement.querySelector('#type');
+  var capacityInputElement = offerFormElement.querySelector('#capacity');
+  var capacityOptionElements = capacityInputElement.querySelectorAll('option');
 
   var checkDisabledOptions = function () {
     var selectElements = offerFormElement.querySelectorAll('select');
@@ -79,9 +81,6 @@
   };
 
   var roomsInputChangeHandler = function (evt) {
-    var capacityInputElement = offerFormElement.querySelector('#capacity');
-    var capacityOptionElements = capacityInputElement.querySelectorAll('option');
-
     switch (evt.target.value) {
       case '1':
         window.formUtil.setDisabledByValue(capacityOptionElements, ['0', '2', '3']);
