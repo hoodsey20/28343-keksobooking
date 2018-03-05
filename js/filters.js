@@ -8,7 +8,8 @@
   var filters = {
     'features': [],
   };
-  var filterFormElements = document.querySelector('.map__filters').elements;
+
+  var filtersContainerElement = document.querySelector('.map__filters');
 
   var getFilteredOffers = function () {
     var currentOffers = window.offers.slice(0);
@@ -80,13 +81,13 @@
     }
   };
 
-  for (var i = 0; i < filterFormElements.length; i++) {
-    if (filterFormElements[i].type === 'checkbox') {
-      filterFormElements[i].addEventListener('change', checkboxChangeHandler);
-      filterFormElements[i].addEventListener('change', window.debounce(applyOfferFilters, DEBOUNCE_TIME));
-    } else if (filterFormElements[i].tagName === 'SELECT') {
-      filterFormElements[i].addEventListener('change', selectChangeHandler);
-      filterFormElements[i].addEventListener('change', window.debounce(applyOfferFilters, DEBOUNCE_TIME));
-    }
-  }
+  filtersContainerElement.querySelectorAll('input[type="checkbox"]').forEach(function (element) {
+    element.addEventListener('change', checkboxChangeHandler);
+    element.addEventListener('change', window.debounce(applyOfferFilters, DEBOUNCE_TIME));
+  });
+
+  filtersContainerElement.querySelectorAll('select').forEach(function (element) {
+    element.addEventListener('change', selectChangeHandler);
+    element.addEventListener('change', window.debounce(applyOfferFilters, DEBOUNCE_TIME));
+  });
 })();

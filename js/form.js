@@ -23,25 +23,26 @@
     var selectElements = offerFormElement.querySelectorAll('select');
     var isValid = true;
 
-    for (var i = 0; i < selectElements.length; i++) {
-      var selectedOptionElement = selectElements[i].selectedOptions[0];
-      window.formUtil.resetInvalidHighlightingInput(selectElements[i]);
-      selectElements[i].setCustomValidity('');
+    selectElements.forEach(function (element) {
+      var selectedOptionElement = element.selectedOptions[0];
+      window.formUtil.resetInvalidHighlightingInput(element);
+      element.setCustomValidity('');
 
       if (selectedOptionElement.disabled) {
         isValid = false;
-        window.formUtil.highlightInvalidInput(selectElements[i]);
-        selectElements[i].setCustomValidity('Данный вариант не может быть принят');
+        window.formUtil.highlightInvalidInput(element);
+        element.setCustomValidity('Данный вариант не может быть принят');
       }
-    }
+    });
 
     return isValid;
   };
 
   var formSubmitHandler = function (evt) {
-    for (var i = 0; i < inputElements.length; i++) {
-      window.formUtil.resetInvalidHighlightingInput(inputElements[i]);
-    }
+    inputElements.forEach(function (element) {
+      window.formUtil.resetInvalidHighlightingInput(element);
+    });
+
     var isInputsValid = offerFormElement.checkValidity();
     var isOptionsValid = checkDisabledOptions();
 
@@ -109,9 +110,9 @@
   typeInputElement.addEventListener('change', typeInputChangeHandler);
   roomsInputElement.addEventListener('change', roomsInputChangeHandler);
 
-  for (var i = 0; i < inputElements.length; i++) {
-    inputElements[i].addEventListener('invalid', function (evt) {
+  inputElements.forEach(function (element) {
+    element.addEventListener('invalid', function (evt) {
       window.formUtil.highlightInvalidInput(evt.target);
     });
-  }
+  });
 })();

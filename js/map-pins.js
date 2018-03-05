@@ -32,20 +32,17 @@
     }
 
     pinsElements = Array.prototype.slice.call(pinsElements, 1);
-
-    for (var i = 0; i < pinsElements.length; i++) {
-      pinsElements[i].remove();
-    }
+    pinsElements.forEach(function (element) {
+      element.remove();
+    });
   };
 
   window.mapPins.render = function (offers) {
     var mapPinsContainerELement = document.querySelector('.map__pins');
     var mapPinsFragment = document.createDocumentFragment();
-
-    for (var i = 0; i < Math.min(offers.length, PIN_ELEMENTS_QUANTITY); i++) {
-      mapPinsFragment.appendChild(createOfferPin(offers[i]));
-    }
-
+    offers.slice(0, PIN_ELEMENTS_QUANTITY).forEach(function (element) {
+      mapPinsFragment.appendChild(createOfferPin(element));
+    });
     mapPinsContainerELement.appendChild(mapPinsFragment);
   };
 })();

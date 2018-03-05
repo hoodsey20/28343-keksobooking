@@ -11,21 +11,22 @@
     var picturesFragment = document.createDocumentFragment();
     var pictureItemElement = picturesContainer.querySelector('li');
 
-    for (var i = 0; i < pictures.length; i++) {
+    pictures.forEach(function (element) {
       var offerPictureElement = pictureItemElement.cloneNode(true);
-      offerPictureElement.querySelector('img').src = pictures[i];
+      offerPictureElement.querySelector('img').src = element;
       offerPictureElement.querySelector('img').width = 50;
       picturesFragment.appendChild(offerPictureElement);
-    }
+    });
+
     picturesContainer.appendChild(picturesFragment);
   };
 
   var deleteOddFeatures = function (featureItems, featuresList) {
-    for (var i = 0; i < featureItems.length; i++) {
-      if (featuresList.indexOf(featureItems[i].className.split('--')[1]) === -1) {
-        featureItems[i].remove();
+    featureItems.forEach(function (element) {
+      if (featuresList.indexOf(element.className.split('--')[1]) === -1) {
+        element.remove();
       }
-    }
+    });
   };
 
   var removeOfferCard = function () {

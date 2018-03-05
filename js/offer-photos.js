@@ -9,8 +9,8 @@
   var clearPreviews = function () {
     var previewElements = photoContainerElement.querySelectorAll('.form__photo');
     if (previewElements) {
-      previewElements.forEach(function (previewElement) {
-        previewElement.remove();
+      previewElements.forEach(function (element) {
+        element.remove();
       });
     }
   };
@@ -37,8 +37,8 @@
   photoInputElement.addEventListener('change', function () {
     clearPreviews();
     var uploadedfiles = photoInputElement.files;
-    Object.keys(uploadedfiles).forEach(function (file) {
-      createPreview(uploadedfiles[file]);
+    Object.keys(uploadedfiles).forEach(function (element) {
+      createPreview(uploadedfiles[element]);
     });
   });
 })();

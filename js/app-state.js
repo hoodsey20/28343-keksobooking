@@ -10,17 +10,17 @@
   window.appState.setActive = function () {
     offerFormElement.classList.remove('notice__form--disabled');
     mapElement.classList.remove('map--faded');
-    for (var i = 0; i < offerFormFieldsetElements.length; i++) {
-      offerFormFieldsetElements[i].disabled = false;
-    }
+    offerFormFieldsetElements.forEach(function (element) {
+      element.disabled = false;
+    });
   };
 
   window.appState.unsetActive = function () {
     offerFormElement.classList.add('notice__form--disabled');
     mapElement.classList.add('map--faded');
-    for (var i = 0; i < offerFormFieldsetElements.length; i++) {
-      offerFormFieldsetElements[i].disabled = true;
-    }
+    offerFormFieldsetElements.forEach(function (element) {
+      element.disabled = true;
+    });
     window.formUtil.resetAllInvalidHighlighting();
     window.mapPins.remove();
     window.offerCard.remove();
