@@ -585,6 +585,17 @@ textarea:focus
     min-height: 90px;
 }
 
+.form__photo
+{
+  display: inline-block;
+  width: 30%;
+  padding-bottom: 30%;
+
+  background-size: cover;
+  background-position: center;
+
+}
+
 #timein {
     margin-right: 14px;
 }
