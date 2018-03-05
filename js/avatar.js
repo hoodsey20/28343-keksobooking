@@ -10,11 +10,11 @@
     var file = avatarInputElement.files[0];
     var fileName = file.name.toLowerCase();
 
-    var matches = FILE_TYPES.some(function (it) {
+    var isRightFormat = FILE_TYPES.some(function (it) {
       return fileName.endsWith(it);
     });
 
-    if (matches) {
+    if (isRightFormat) {
       var reader = new FileReader();
       reader.readAsDataURL(file);
 
