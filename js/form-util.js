@@ -13,18 +13,18 @@
 
   window.formUtil.resetAllInvalidHighlighting = function () {
     var invalidInputs = document.querySelectorAll('.invalid-value-input');
-    for (var i = 0; i < invalidInputs.length; i++) {
-      this.resetInvalidHighlightingInput(invalidInputs[i]);
-    }
+    invalidInputs.forEach(function (element) {
+      window.formUtil.resetInvalidHighlightingInput(element);
+    });
   };
 
   window.formUtil.setDisabledByValue = function (elements, values) {
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].disabled = false;
-      if (values.indexOf(elements[i].value) > -1) {
-        elements[i].disabled = true;
+    elements.forEach(function (element) {
+      element.disabled = false;
+      if (values.indexOf(element.value) > -1) {
+        element.disabled = true;
       }
-    }
+    });
   };
 
   window.formUtil.setAdress = function (x, y) {
