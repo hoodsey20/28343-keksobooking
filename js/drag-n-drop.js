@@ -15,6 +15,12 @@
     evt.preventDefault();
     var inputElement = document.getElementById(evt.target.htmlFor);
     inputElement.files = evt.dataTransfer.files;
+
+    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+      var changeEvent = new Event('change');
+      inputElement.dispatchEvent(changeEvent);
+    }
+
     removeDragData(evt);
   };
 
