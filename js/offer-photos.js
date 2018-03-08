@@ -5,14 +5,21 @@
 
   var photoContainerElement = document.querySelector('.form__photo-container');
   var photoInputElement = photoContainerElement.querySelector('input[type="file"]');
+  var previewContainerElement = photoContainerElement.querySelector('.form__preview-container');
+  var draggedElement = null;
 
-  var clearPreviews = function () {
-    var previewElements = photoContainerElement.querySelectorAll('.form__photo');
-    if (previewElements) {
-      previewElements.forEach(function (element) {
-        element.remove();
-      });
-    }
+  var clickHandler = function (evt) {
+    evt.preventDefault();
+    evt.target.remove();
+  };
+
+  var dragStartHandler = function (evt) {
+    draggedElement = evt.target;
+  };
+
+  var dropHandler = function (evt) {
+    previewContainerElement.insertBefore(draggedElement, evt.target);
+    evt.preventDefault();
   };
 
   var createPreview = function (file) {
@@ -29,13 +36,22 @@
         var previewElement = document.createElement('div');
         previewElement.classList.add('form__photo');
         previewElement.style.backgroundImage = 'url(' + reader.result + ')';
-        photoContainerElement.appendChild(previewElement);
+        previewElement.draggable = true;
+        previewElement.addEventListener('click', clickHandler);
+        previewElement.addEventListener('dragstart', dragStartHandler);
+        previewElement.addEventListener('drop', dropHandler);
+
+        previewContainerElement.appendChild(previewElement);
       });
     }
   };
 
+  previewContainerElement.addEventListener('dragover', function (evt) {
+    evt.preventDefault();
+    return false;
+  });
+
   photoInputElement.addEventListener('change', function () {
-    clearPreviews();
     var uploadedfiles = photoInputElement.files;
     Object.keys(uploadedfiles).forEach(function (element) {
       createPreview(uploadedfiles[element]);
