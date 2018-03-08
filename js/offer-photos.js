@@ -18,7 +18,16 @@
   };
 
   var dropHandler = function (evt) {
-    previewContainerElement.insertBefore(draggedElement, evt.target);
+    var previewElements = previewContainerElement.querySelectorAll('.form__photo');
+    var draggedElementIndex = [].indexOf.call(previewElements, draggedElement);
+    var aimElementIndex = [].indexOf.call(previewElements, evt.target);
+
+    if (draggedElementIndex > aimElementIndex) {
+      previewContainerElement.insertBefore(draggedElement, evt.target);
+    } else {
+      previewContainerElement.insertBefore(draggedElement, evt.target.nextSibling);
+    }
+
     evt.preventDefault();
   };
 
