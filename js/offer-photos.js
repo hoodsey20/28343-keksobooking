@@ -57,7 +57,6 @@
 
   previewContainerElement.addEventListener('dragover', function (evt) {
     evt.preventDefault();
-    return false;
   });
 
   photoInputElement.addEventListener('change', function () {
